@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكتب المدير العام - قسم التنسيق والمتابعة</title>
+
+    <!-- ===== إعدادات التطبيق PWA ===== -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a5276">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="المواعيد واللقاءات">
+    <meta name="application-name" content="المواعيد واللقاءات">
+    <link rel="icon" type="image/png" href="data:image/png;base64,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">
+    <link rel="apple-touch-icon" href="data:image/png;base64,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">
+    <style>
+        #pwa-install-btn { display:none; position:fixed; bottom:20px; left:20px; z-index:100001; background:#f1c40f; color:#1a5276; border:none; border-radius:30px; padding:12px 22px; font-size:15px; font-weight:900; box-shadow:0 4px 15px rgba(0,0,0,0.25); cursor:pointer; align-items:center; gap:8px; }
+        @media print { #pwa-install-btn { display:none !important; } }
+    </style>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- مكتبات الرسم البياني والـ PDF -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <style>
+        :root {
+            --primary: #1a5276; --primary-light: #2980b9; 
+            --bg-main: #e6edf2; 
+            --text-dark: #000000; --border: #ccc; --shadow: 0 4px 15px rgba(0,0,0,0.05);
+            --radius: 12px; --radius-sm: 8px;
+            --c-cit: #2e86de; --c-shu: #10ac84; --c-mun: #8395a7; --c-fld: #ff9f43;
+            --c-int: #ee5253; --c-ext: #01a3a4; --c-asy: #341f97; --c-gov: #feca57;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        body { background: var(--bg-main); color: var(--text-dark); overflow-x: hidden; }
+
+        /* شاشة تسجيل الدخول */
+        #login-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: linear-gradient(135deg, var(--primary), var(--primary-light)); display: flex; justify-content: center; align-items: center; z-index: 99999; }
+        .login-box { background: white; padding: 40px; border-radius: var(--radius); box-shadow: 0 10px 30px rgba(0,0,0,0.2); width: 100%; max-width: 450px; text-align: center; }
+        .login-box i { font-size: 60px; color: var(--primary); margin-bottom: 20px; }
+        .login-box h2 { font-size: 26px; font-weight: 900; margin-bottom: 25px; color: var(--primary); }
+        .login-box input { width: 100%; padding: 15px; margin-bottom: 15px; border: 2px solid var(--border); border-radius: var(--radius-sm); font-size: 18px; font-weight: 700; text-align: center; }
+        .login-box button { width: 100%; padding: 15px; background: var(--primary); color: white; border: none; border-radius: var(--radius-sm); font-size: 20px; font-weight: 800; cursor: pointer; }
+
+        /* القائمة الجانبية */
+        .sidebar { position: fixed; right: 0; top: 0; width: 260px; height: 100vh; background: #fff; z-index: 1000; box-shadow: -2px 0 10px rgba(0,0,0,0.05); overflow-y: auto; }
+        .sidebar-header { padding: 25px 15px; text-align: center; border-bottom: 1px solid var(--border); background: var(--primary); color: white;}
+        .sidebar-header h2 { color: #f1c40f; font-weight: 900; font-size: 18px; line-height: 1.5; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+        .sidebar-menu { padding: 15px 10px; }
+        .menu-item { display: flex; align-items: center; gap: 10px; padding: 10px 15px; color: #333; text-decoration: none; border-radius: var(--radius-sm); cursor: pointer; font-weight: 700; font-size: 14px; margin-bottom: 5px; transition: 0.2s; }
+        .menu-item:hover, .menu-item.active { background: var(--primary-light); color: white; }
+        .menu-item .badge { margin-right: auto; background: rgba(0,0,0,0.1); padding: 2px 8px; border-radius: 20px; font-size: 12px; }
+
+        /* المحتوى الرئيسي */
+        .main-content { margin-right: 260px; min-height: 100vh; display: none; }
+        .top-header { background: white; padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+        .top-header-titles { flex: 2; text-align: center; } 
+        .top-header-titles h1 { font-size: 22px; font-weight: 900; color: var(--primary); margin: 0; }
+        .sys-time { flex: 1; text-align: left; font-weight: 800; color: #555; }
+        .spacer { flex: 1; }
+        .content-area { padding: 20px; }
+        .section-panel { display: none; }
+        .section-panel.active { display: block; animation: fadeIn 0.4s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* لوحة القيادة */
+        .main-dash-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; }
+        .dash-card { background: white; border-radius: var(--radius); padding: 20px; display: flex; align-items: center; gap: 15px; box-shadow: var(--shadow); cursor: pointer; border: 1px solid var(--border); border-right: 5px solid; }
+        .dash-card i { font-size: 30px; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 10px; color: white; }
+        .dash-card-info h4 { font-size: 14px; color: #555; font-weight: 700; }
+        .dash-card-info h2 { font-size: 24px; font-weight: 900; color: #000; margin-top: 5px; }
+
+        /* النماذج */
+        .form-card { background: white; border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 20px; border: 1px solid var(--border); }
+        .form-header { padding: 15px 20px; border-bottom: 1px solid var(--border); background: #f8f9fa; border-radius: var(--radius) var(--radius) 0 0; }
+        .form-header h3 { font-size: 16px; font-weight: 800; color: var(--primary); }
+        .form-body { padding: 20px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-size: 13px; font-weight: 800; color: #000; }
+        .form-control { width: 100%; padding: 8px 12px; border: 2px solid #ccc; border-radius: var(--radius-sm); font-size: 14px; font-weight: 800; color: #000; outline: none; }
+        .form-control:focus { border-color: var(--primary); }
+        textarea.form-control { min-height: 60px; resize: vertical; }
+        .form-footer { padding: 15px 20px; border-top: 1px solid var(--border); display: flex; gap: 10px; }
+        .btn { padding: 8px 20px; border: none; border-radius: var(--radius-sm); font-size: 14px; font-weight: 800; cursor: pointer; color: white; display: inline-flex; align-items: center; gap: 5px; }
+        .btn-primary { background: var(--primary); }
+        .btn-success { background: #27ae60; }
+        .btn-outline { background: transparent; color: #333; border: 2px solid #ccc; }
+        .btn-cancel { background: #95a5a6; display: none; }
+
+        /* الجداول */
+        .table-toolbar { display: flex; justify-content: space-between; margin-bottom: 10px; gap: 10px; }
+        .search-box { flex: 1; position: relative; }
+        .search-box input { width: 100%; padding: 8px 35px 8px 12px; border: 2px solid #ccc; border-radius: var(--radius-sm); font-weight: 700; }
+        .search-box i { position: absolute; right: 12px; top: 10px; color: #777; }
+        .table-container { max-height: 400px; overflow-y: auto; border: 1px solid var(--border); border-radius: var(--radius-sm); background: white;}
+        .data-table { width: 100%; border-collapse: collapse; font-size: 13px; font-weight: 700; color: #000; }
+        .data-table th { background: var(--primary); color: white; padding: 12px; text-align: right; position: sticky; top: 0; z-index: 10; border-bottom: 2px solid #000;}
+        .data-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+        .data-table tr:hover td { background: rgba(0,0,0,0.05); } 
+        
+        tr.row-done td { background-color: #ffdddd !important; } 
+        tr.row-progress td { background-color: #fff4cc !important; } 
+
+        .action-btns { display: flex; gap: 5px; align-items: center; justify-content: flex-start; }
+        .action-btn { height: 26px; border: none; border-radius: 4px; cursor: pointer; color: white; font-size: 12px; display: flex; justify-content: center; align-items: center; padding: 0 8px;}
+        .action-btn.edit { background: #3498db; width: 26px; }
+        .action-btn.delete { background: #e74c3c; width: 26px; }
+        .action-btn.attachment { background: #8e44ad; font-weight: bold; gap: 5px; }
+        .action-btn.print-rec { background: #2c3e50; width: 26px; }
+
+        /* التقارير والـ PDF */
+        .report-controls { background: white; padding: 20px; border-radius: var(--radius); margin-bottom: 20px; display: flex; gap: 15px; align-items: flex-end; border: 1px solid var(--border); flex-wrap: wrap; }
+        #pdf-content { background: white; padding: 20px; border-radius: var(--radius); border: 1px solid var(--border); display: none; }
+        .report-title-dynamic { text-align: center; font-size: 15px; font-weight: 900; color: #000; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 10px; line-height: 1.5;}
+        .compact-table { width: 100%; border-collapse: collapse; font-size: 11px; font-weight:bold; color: #000; margin-bottom: 15px; }
+        .compact-table th, .compact-table td { padding: 4px 5px; border: 1px solid #000; text-align: center; line-height: 1.2; } 
+        .compact-table th { background: #eef2f5; }
+        .charts-container { display: flex; justify-content: center; align-items: stretch; gap: 20px; flex-wrap: wrap; margin-top: 15px; page-break-inside: avoid; }
+        .chart-box { flex: 1; min-width: 300px; max-width: 400px; text-align: center; background: #fafafa; padding: 10px; border-radius: var(--radius); border: 1px solid var(--border); }
+        .chart-wrapper { height: 220px; width: 100%; position: relative; margin: 0 auto; }
+
+        /* نافذة عرض الصور */
+        #image-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 100000; justify-content: center; align-items: center; }
+        .modal-content { background: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 800px; max-height: 90vh; overflow-y: auto; text-align: center; position: relative; }
+        .img-grid { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 15px; }
+        .img-grid img { max-width: 100%; height: auto; border: 2px solid #ccc; border-radius: 5px; margin-bottom: 10px; }
+        .close-modal { position: absolute; top: 15px; right: 20px; cursor: pointer; font-size: 24px; color: red; font-weight: bold; }
+
+        @media print {
+            @page { size: A4 portrait; margin: 0.5cm; }
+            .sidebar, .form-card:not(#sec-reports .form-card), .report-controls, .table-toolbar, .action-btns, th:last-child, td:last-child { display: none !important; }
+            .main-content { margin: 0 !important; display: block !important;}
+            .top-header { box-shadow: none !important; border-bottom: 2px solid #000; margin-bottom: 10px;}
+            .content-area { padding: 0 !important; }
+            .table-container { max-height: none !important; border: none !important; }
+            .data-table th { color: #000 !important; background: #ddd !important; }
+            #pdf-content { display: block !important; border: none; padding: 0; }
+            .compact-table { margin-bottom: 10px; font-size: 10px; }
+            .charts-container { display: flex !important; flex-direction: row; gap: 10px; page-break-before: auto; justify-content: center;}
+            .chart-box { box-shadow: none; border: 1px solid #ccc; padding: 5px; }
+            .chart-wrapper { height: 180px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- شاشة تسجيل الدخول -->
+<div id="login-screen">
+    <div class="login-box">
+        <i class="fas fa-user-shield"></i>
+        <h2>تسجيل الدخول للنظام</h2>
+        <input type="text" id="username" placeholder="اسم المستخدم">
+        <input type="password" id="password" placeholder="كلمة المرور">
+        <button onclick="checkLogin()">تسجيل الدخول</button>
+        <p id="login-error" style="color: red; font-weight: bold; margin-top: 15px; display: none;">بيانات الدخول غير صحيحة!</p>
+    </div>
+</div>
+
+<!-- نافذة عرض الصور للزيارات الميدانية -->
+<div id="image-modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeImageModal()"><i class="fas fa-times"></i></span>
+        <h3 id="modal-title" style="color:var(--primary); margin-bottom: 10px;">صور الزيارة</h3>
+        <button class="btn btn-primary" onclick="printModalImages()"><i class="fas fa-print"></i> طباعة الصور</button>
+        <div class="img-grid" id="modal-images"></div>
+    </div>
+</div>
+
+<aside class="sidebar">
+    <div class="sidebar-header">
+        <h2>المديرية العامة للإسكان<br>بمحافظة شمال الباطنة</h2>
+    </div>
+    <nav class="sidebar-menu">
+        <a class="menu-item active" onclick="showSection('dashboard')"><i class="fas fa-home"></i>الرئيسية</a>
+        <a class="menu-item" onclick="showSection('citizens')"><i class="fas fa-users"></i>المراجعين <span class="badge" id="c-cit">0</span></a>
+        <a class="menu-item" onclick="showSection('shura')"><i class="fas fa-landmark"></i>مجلس الشورى <span class="badge" id="c-shu">0</span></a>
+        <a class="menu-item" onclick="showSection('municipal')"><i class="fas fa-city"></i>المجلس البلدي <span class="badge" id="c-mun">0</span></a>
+        <a class="menu-item" onclick="showSection('fieldvisits')"><i class="fas fa-map-marked-alt"></i>الزيارات الميدانية <span class="badge" id="c-fld">0</span></a>
+        <a class="menu-item" onclick="showSection('internal')"><i class="fas fa-handshake"></i>الاجتماعات الداخلية <span class="badge" id="c-int">0</span></a>
+        <a class="menu-item" onclick="showSection('external')"><i class="fas fa-globe"></i>الاجتماعات الخارجية <span class="badge" id="c-ext">0</span></a>
+        <a class="menu-item" onclick="showSection('asyad')"><i class="fas fa-ship"></i>اجتماعات أسياد <span class="badge" id="c-asy">0</span></a>
+        <a class="menu-item" onclick="showSection('governors')"><i class="fas fa-user-tie"></i>زيارات الولاة <span class="badge" id="c-gov">0</span></a>
+        <a class="menu-item" onclick="showSection('reports')"><i class="fas fa-file-pdf"></i>التقارير (PDF)</a>
+    </nav>
+</aside>
+
+<div class="main-content" id="main-app">
+    <header class="top-header">
+        <div class="spacer"></div>
+        <div class="top-header-titles">
+            <h1>مكتب المدير العام - قسم التنسيق والمتابعة</h1>
+        </div>
+        <div id="sysTime" class="sys-time"></div>
+    </header>
+
+    <div class="content-area">
+        <datalist id="dl_members"></datalist>
+        <datalist id="dl_platform_types"></datalist>
+
+        <!-- لوحة القيادة -->
+        <div class="section-panel active" id="sec-dashboard">
+            <div class="main-dash-grid">
+                <div class="dash-card" style="border-color: var(--c-cit)" onclick="showSection('citizens')"><i class="fas fa-users" style="background: var(--c-cit)"></i><div class="dash-card-info"><h4>المراجعين</h4><h2 id="d-cit">0</h2></div></div>
+                <div class="dash-card" style="border-color: var(--c-shu)" onclick="showSection('shura')"><i class="fas fa-landmark" style="background: var(--c-shu)"></i><div class="dash-card-info"><h4>مجلس الشورى</h4><h2 id="d-shu">0</h2></div></div>
+                <div class="dash-card" style="border-color: var(--c-mun)" onclick="showSection('municipal')"><i class="fas fa-city" style="background: var(--c-mun)"></i><div class="dash-card-info"><h4>المجلس البلدي</h4><h2 id="d-mun">0</h2></div></div>
+                <div class="dash-card" style="border-color: var(--c-fld)" onclick="showSection('fieldvisits')"><i class="fas fa-map-marked-alt" style="background: var(--c-fld)"></i><div class="dash-card-info"><h4>زيارات ميدانية</h4><h2 id="d-fld">0</h2></div></div>
+                <div class="dash-card" style="border-color: var(--c-int)" onclick="showSection('internal')"><i class="fas fa-handshake" style="background: var(--c-int)"></i><div class="dash-card-info"><h4>اجتماعات داخلية</h4><h2 id="d-int">0</h2></div></div>
+                <div class="dash-card" style="border-color: var(--c-ext)" onclick="showSection('external')"><i class="fas fa-globe" style="background: var(--c-ext)"></i><div class="dash-card-info"><h4>اجتماعات خارجية</h4><h2 id="d-ext">0</h2></div></div>
+                <div class="dash-card" style="border-color: var(--c-asy)" onclick="showSection('asyad')"><i class="fas fa-ship" style="background: var(--c-asy)"></i><div class="dash-card-info"><h4>اجتماعات أسياد</h4><h2 id="d-asy">0</h2></div></div>
+                <div class="dash-card" style="border-color: var(--c-gov)" onclick="showSection('governors')"><i class="fas fa-user-tie" style="background: var(--c-gov)"></i><div class="dash-card-info"><h4>زيارات الولاة</h4><h2 id="d-gov">0</h2></div></div>
+            </div>
+        </div>
+
+        <!-- 1. المراجعين -->
+        <div class="section-panel" id="sec-citizens">
+            <div class="form-card">
+                <div class="form-header"><h3>تسجيل مقابلة مراجع</h3></div>
+                <div class="form-body">
+                    <div class="form-grid">
+                        <div class="form-group"><label>اسم المراجع *</label><input type="text" id="cit_name" class="form-control"></div>
+                        <div class="form-group"><label>التاريخ *</label><input type="date" id="cit_date" class="form-control"></div>
+                        <div class="form-group"><label>الدائرة المختصة</label><select id="cit_dept" class="form-control" onchange="updateSections('cit_dept', 'cit_sec')"><option value="">اختر الدائرة...</option></select></div>
+                        <div class="form-group"><label>القسم</label><select id="cit_sec" class="form-control"><option value="">اختر القسم...</option></select></div>
+                        <div class="form-group"><label>الولاية</label><select id="cit_state" class="form-control"><option value="">اختر...</option><option>صحار</option><option>شناص</option><option>لوى</option><option>صحم</option><option>الخابورة</option><option>السويق</option></select></div>
+                        <div class="form-group"><label>رقم الهاتف</label><input type="tel" id="cit_phone" class="form-control"></div>
+                        
+                        <div class="form-group"><label>رقم سلاسة</label><input type="text" id="cit_salasa" class="form-control"></div>
+                        <div class="form-group"><label>رقم المنصة</label><input type="text" id="cit_platform_no" class="form-control"></div>
+                        <div class="form-group"><label>نوع المعاملة في المنصة</label><input type="text" id="cit_platform_type" class="form-control" list="dl_platform_types" placeholder="اختر أو اكتب نوع المعاملة"></div>
+
+                        <div class="form-group" style="grid-column: 1/-1"><label>الموضوع *</label><textarea id="cit_subject" class="form-control"></textarea></div>
+                    </div>
+                </div>
+                <div class="form-footer">
+                    <button class="btn btn-primary" id="btn-save-citizens" onclick="saveRecord('citizens')"><i class="fas fa-save"></i> حفظ السجل</button>
+                    <button class="btn btn-cancel" id="btn-cancel-citizens" onclick="cancelEdit('citizens')">إلغاء التعديل</button>
+                </div>
+            </div>
+            <div class="table-toolbar"><div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="بحث..." onkeyup="searchTable('citizens', this.value)"></div></div>
+            <div class="table-container"><table class="data-table" id="tbl-citizens"><thead><tr><th>التاريخ</th><th>الاسم</th><th>المنصة/سلاسة</th><th>الموضوع</th><th>الإجراءات</th></tr></thead><tbody></tbody></table></div>
+        </div>
+
+        <!-- 2. الشورى -->
+        <div class="section-panel" id="sec-shura">
+            <div class="form-card">
+                <div class="form-header"><h3>تسجيل مقابلة عضو شورى</h3></div>
+                <div class="form-body">
+                    <div class="form-grid">
+                        <div class="form-group"><label>اسم العضو *</label><input type="text" id="shu_name" class="form-control" list="dl_members" onchange="autoFillMember(this.value, 'shu_state', 'shu_phone')"></div>
+                        <div class="form-group"><label>التاريخ *</label><input type="date" id="shu_date" class="form-control"></div>
+                        <div class="form-group"><label>الدائرة المختصة</label><select id="shu_dept" class="form-control" onchange="updateSections('shu_dept', 'shu_sec')"><option value="">اختر الدائرة...</option></select></div>
+                        <div class="form-group"><label>القسم</label><select id="shu_sec" class="form-control"><option value="">اختر القسم...</option></select></div>
+                        <div class="form-group"><label>الولاية *</label><select id="shu_state" class="form-control"><option value="">اختر...</option><option>صحار</option><option>شناص</option><option>لوى</option><option>صحم</option><option>الخابورة</option><option>السويق</option></select></div>
+                        <div class="form-group"><label>رقم الهاتف</label><input type="tel" id="shu_phone" class="form-control"></div>
+                        <div class="form-group"><label>عدد المرافقين</label><input type="number" id="shu_comp_count" class="form-control" value="0"></div>
+                        <div class="form-group"><label>حالة المعاملة</label><select id="shu_status" class="form-control"><option>جديدة</option><option>قيد المتابعة</option><option>قيد الاجراء</option><option>منجزة</option></select></div>
+                        <div class="form-group" style="grid-column: 1/-1"><label>أسماء المرافقين</label><textarea id="shu_comp_names" class="form-control"></textarea></div>
+                        <div class="form-group" style="grid-column: 1/-1"><label>الموضوع *</label><textarea id="shu_subject" class="form-control"></textarea></div>
+                    </div>
+                </div>
+                <div class="form-footer"><button class="btn btn-primary" id="btn-save-shura" onclick="saveRecord('shura')"><i class="fas fa-save"></i> حفظ السجل</button><button class="btn btn-cancel" id="btn-cancel-shura" onclick="cancelEdit('shura')">إلغاء التعديل</button></div>
+            </div>
+            <div class="table-toolbar"><div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="بحث..." onkeyup="searchTable('shura', this.value)"></div></div>
+            <div class="table-container"><table class="data-table" id="tbl-shura"><thead><tr><th>التاريخ</th><th>الاسم</th><th>الولاية</th><th>الحالة</th><th>الموضوع</th><th>الإجراءات</th></tr></thead><tbody></tbody></table></div>
+        </div>
+
+        <!-- 3. المجلس البلدي -->
+        <div class="section-panel" id="sec-municipal">
+            <div class="form-card">
+                <div class="form-header"><h3>تسجيل عضو مجلس بلدي</h3></div>
+                <div class="form-body">
+                    <div class="form-grid">
+                        <div class="form-group"><label>اسم العضو *</label><input type="text" id="mun_name" class="form-control" list="dl_members" onchange="autoFillMember(this.value, 'mun_state', 'mun_phone')"></div>
+                        <div class="form-group"><label>التاريخ *</label><input type="date" id="mun_date" class="form-control"></div>
+                        <div class="form-group"><label>الدائرة المختصة</label><select id="mun_dept" class="form-control" onchange="updateSections('mun_dept', 'mun_sec')"><option value="">اختر الدائرة...</option></select></div>
+                        <div class="form-group"><label>القسم</label><select id="mun_sec" class="form-control"><option value="">اختر القسم...</option></select></div>
+                        <div class="form-group"><label>الولاية *</label><select id="mun_state" class="form-control"><option value="">اختر...</option><option>صحار</option><option>شناص</option><option>لوى</option><option>صحم</option><option>الخابورة</option><option>السويق</option></select></div>
+                        <div class="form-group"><label>رقم الهاتف</label><input type="tel" id="mun_phone" class="form-control"></div>
+                        <div class="form-group"><label>عدد المرافقين</label><input type="number" id="mun_comp_count" class="form-control" value="0"></div>
+                        <div class="form-group"><label>حالة المعاملة</label><select id="mun_status" class="form-control"><option>جديدة</option><option>قيد المتابعة</option><option>قيد الاجراء</option><option>منجزة</option></select></div>
+                        <div class="form-group" style="grid-column: 1/-1"><label>أسماء المرافقين</label><textarea id="mun_comp_names" class="form-control"></textarea></div>
+                        <div class="form-group" style="grid-column: 1/-1"><label>الموضوع *</label><textarea id="mun_subject" class="form-control"></textarea></div>
+                    </div>
+                </div>
+                <div class="form-footer"><button class="btn btn-primary" id="btn-save-municipal" onclick="saveRecord('municipal')"><i class="fas fa-save"></i> حفظ السجل</button><button class="btn btn-cancel" id="btn-cancel-municipal" onclick="cancelEdit('municipal')">إلغاء التعديل</button></div>
+            </div>
+            <div class="table-toolbar"><div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="بحث..." onkeyup="searchTable('municipal', this.value)"></div></div>
+            <div class="table-container"><table class="data-table" id="tbl-municipal"><thead><tr><th>التاريخ</th><th>الاسم</th><th>الولاية</th><th>الحالة</th><th>الموضوع</th><th>الإجراءات</th></tr></thead><tbody></tbody></table></div>
+        </div>
+
+        <!-- 4. الزيارات الميدانية -->
+        <div class="section-panel" id="sec-fieldvisits">
+            <div class="form-card">
+                <div class="form-header"><h3>تسجيل زيارة ميدانية</h3></div>
+                <div class="form-body">
+                    <div class="form-grid">
+                        <div class="form-group"><label>اسم المكان المستهدف *</label><input type="text" id="fld_place" class="form-control"></div>
+                        <div class="form-group"><label>التاريخ *</label><input type="date" id="fld_date" class="form-control"></div>
+                        <div class="form-group"><label>الفريق المشارك</label><input type="text" id="fld_team" class="form-control"></div>
+                        <div class="form-group"><label>حالة المعاملة</label><select id="fld_status" class="form-control"><option>جديدة</option><option>قيد المتابعة</option><option>قيد الاجراء</option><option>منجزة</option></select></div>
+                        <div class="form-group" style="grid-column: 1/-1"><label>الهدف من الزيارة</label><textarea id="fld_goal" class="form-control"></textarea></div>
+                        <div class="form-group" style="grid-column: 1/-1"><label>الملاحظات والنتائج الميدانية</label><textarea id="fld_notes" class="form-control"></textarea></div>
+                        <div class="form-group" style="grid-column: 1/-1">
+                            <label>إرفاق الصور</label>
+                            <input type="file" id="fld_images" class="form-control" accept="image/*" multiple>
+                            <small style="color:#777; font-weight:bold;">اختر الصور (يتم ضغطها تلقائياً للحفاظ على الذاكرة).</small>
+                            <small id="fld_images_info" style="color:#e74c3c; font-weight:bold; display:none; margin-top:5px;"></small>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-footer"><button class="btn btn-primary" id="btn-save-fieldvisits" onclick="saveRecord('fieldvisits')"><i class="fas fa-save"></i> حفظ السجل</button><button class="btn btn-cancel" id="btn-cancel-fieldvisits" onclick="cancelEdit('fieldvisits')">إلغاء التعديل</button></div>
+            </div>
+            <div class="table-toolbar"><div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="بحث..." onkeyup="searchTable('fieldvisits', this.value)"></div></div>
+            <div class="table-container"><table class="data-table" id="tbl-fieldvisits"><thead><tr><th>التاريخ</th><th>المكان</th><th>الفريق</th><th>الحالة</th><th>الهدف</th><th>الإجراءات</th></tr></thead><tbody></tbody></table></div>
+        </div>
+
+        <!-- 5. الاجتماعات الداخلية -->
+        <div class="section-panel" id="sec-internal">
+            <div class="form-card">
+                <div class="form-header"><h3>تسجيل اجتماع داخلي</h3></div>
+                <div class="form-body">
+                    <div class="form-grid">
+                        <div class="form-group"><label>موضوع الاجتماع *</label><input type="text" id="int_topic" class="form-control"></div>
+                        <div class="form-group"><label>التاريخ *</label><input type="date" id="int_date" class="form-control"></div>
+                        <div class="form-group"><label>الدائرة المختصة</label><select id="int_dept" class="form-control" onchange="updateSections('int_dept', 'int_sec')"><option value="">اختر الدائرة...</option></select></div>
+                        <div class="form-group"><label>القسم</label><select id="int_sec" class="form-control"><option value="">اختر القسم...</option></select></div>
+                        <div class="form-group" style="grid-column: 1/-1"><label>التوصيات والقرارات</label><textarea id="int_decisions" class="form-control"></textarea></div>
+                    </div>
+                </div>
+                <div class="form-footer"><button class="btn btn-primary" id="btn-save-internal" onclick="saveRecord('internal')"><i class="fas fa-save"></i> حفظ السجل</button><button class="btn btn-cancel" id="btn-cancel-internal" onclick="cancelEdit('internal')">إلغاء التعديل</button></div>
+            </div>
+            <div class="table-toolbar"><div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="بحث..." onkeyup="searchTable('internal', this.value)"></div></div>
+            <div class="table-container"><table class="data-table" id="tbl-internal"><thead><tr><th>التاريخ</th><th>الموضوع</th><th>الدائرة</th><th>القرارات</th><th>الإجراءات</th></tr></thead><tbody></tbody></table></div>
+        </div>
+
+        <!-- 6. الاجتماعات الخارجية -->
+        <div class="section-panel" id="sec-external">
+            <div class="form-card">
+                <div class="form-header"><h3>تسجيل اجتماع خارجي أو ورشة</h3></div>
+                <div class="form-body">
+                    <div class="form-grid">
+                        <div class="form-group"><label>اسم الورشة / الاجتماع *</label><input type="text" id="ext_name" class="form-control"></div>
+                        <div class="form-group"><label>التاريخ *</label><input type="date" id="ext_date" class="form-control"></div>
+                        <div class="form-group"><label>الجهة المنظمة</label><input type="text" id="ext_org" class="form-control"></div>
+                        <div class="form-group"><label>المكان</label><input type="text" id="ext_loc" class="form-control"></div>
+                        <div class="form-group" style="grid-column: 1/-1"><label>الأهداف والمخرجات</label><textarea id="ext_goals" class="form-control"></textarea></div>
+                        <div class="form-group" style="grid-column: 1/-1"><label>خطة العمل المشتركة</label><textarea id="ext_plan" class="form-control"></textarea></div>
+                    </div>
+                </div>
+                <div class="form-footer"><button class="btn btn-primary" id="btn-save-external" onclick="saveRecord('external')"><i class="fas fa-save"></i> حفظ السجل</button><button class="btn btn-cancel" id="btn-cancel-external" onclick="cancelEdit('external')">إلغاء التعديل</button></div>
+            </div>
+            <div class="table-toolbar"><div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="بحث..." onkeyup="searchTable('external', this.value)"></div></div>
+            <div class="table-container"><table class="data-table" id="tbl-external"><thead><tr><th>التاريخ</th><th>الاسم</th><th>الجهة المنظمة</th><th>المكان</th><th>الإجراءات</th></tr></thead><tbody></tbody></table></div>
+        </div>
+
+        <!-- 7. اجتماعات أسياد -->
+        <div class="section-panel" id="sec-asyad">
+            <div class="form-card">
+                <div class="form-header"><h3>تسجيل اجتماع شركة أسياد</h3></div>
+                <div class="form-body">
+                    <div class="form-grid">
+                        <div class="form-group" style="grid-column: 1/-1"><label>أهداف الاجتماع *</label><input type="text" id="asy_goals" class="form-control"></div>
+                        <div class="form-group"><label>التاريخ *</label><input type="date" id="asy_date" class="form-control"></div>
+                        <div class="form-group" style="grid-column: 1/-1"><label>أسماء ممثلين الشركة</label><textarea id="asy_reps" class="form-control"></textarea></div>
+                        <div class="form-group" style="grid-column: 1/-1"><label>المتطلبات التخطيطية والعقارية</label><textarea id="asy_reqs" class="form-control"></textarea></div>
+                        <div class="form-group" style="grid-column: 1/-1"><label>القرارات وخطة العمل</label><textarea id="asy_dec" class="form-control"></textarea></div>
+                    </div>
+                </div>
+                <div class="form-footer"><button class="btn btn-primary" id="btn-save-asyad" onclick="saveRecord('asyad')"><i class="fas fa-save"></i> حفظ السجل</button><button class="btn btn-cancel" id="btn-cancel-asyad" onclick="cancelEdit('asyad')">إلغاء التعديل</button></div>
+            </div>
+            <div class="table-toolbar"><div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="بحث..." onkeyup="searchTable('asyad', this.value)"></div></div>
+            <div class="table-container"><table class="data-table" id="tbl-asyad"><thead><tr><th>التاريخ</th><th>الأهداف</th><th>المتطلبات</th><th>القرارات</th><th>الإجراءات</th></tr></thead><tbody></tbody></table></div>
+        </div>
+
+        <!-- 8. زيارات الولاة -->
+        <div class="section-panel" id="sec-governors">
+            <div class="form-card">
+                <div class="form-header"><h3>تسجيل زيارة أصحاب السعادة الولاة</h3></div>
+                <div class="form-body">
+                    <div class="form-grid">
+                        <div class="form-group"><label>اسم الوالي *</label><input type="text" id="gov_name" class="form-control"></div>
+                        <div class="form-group"><label>التاريخ *</label><input type="date" id="gov_date" class="form-control"></div>
+                        <div class="form-group"><label>الولاية *</label><select id="gov_state" class="form-control"><option value="">اختر...</option><option>صحار</option><option>شناص</option><option>لوى</option><option>صحم</option><option>الخابورة</option><option>السويق</option></select></div>
+                        <div class="form-group" style="grid-column: 1/-1"><label>برنامج الزيارة</label><textarea id="gov_prog" class="form-control"></textarea></div>
+                        <div class="form-group" style="grid-column: 1/-1"><label>المطالبات والملاحظات المرفوعة</label><textarea id="gov_demands" class="form-control"></textarea></div>
+                        <div class="form-group" style="grid-column: 1/-1"><label>القرارات والتوجيهات</label><textarea id="gov_dec" class="form-control"></textarea></div>
+                    </div>
+                </div>
+                <div class="form-footer"><button class="btn btn-primary" id="btn-save-governors" onclick="saveRecord('governors')"><i class="fas fa-save"></i> حفظ السجل</button><button class="btn btn-cancel" id="btn-cancel-governors" onclick="cancelEdit('governors')">إلغاء التعديل</button></div>
+            </div>
+            <div class="table-toolbar"><div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="بحث..." onkeyup="searchTable('governors', this.value)"></div></div>
+            <div class="table-container"><table class="data-table" id="tbl-governors"><thead><tr><th>التاريخ</th><th>الوالي</th><th>الولاية</th><th>المطالبات</th><th>الإجراءات</th></tr></thead><tbody></tbody></table></div>
+        </div>
+
+        <!-- 9. التقارير -->
+        <div class="section-panel" id="sec-reports">
+            <div class="report-controls">
+                <div class="form-group" style="flex:1"><label>القسم / نوع التقرير</label>
+                    <select id="rep_section" class="form-control">
+                        <option value="all">جميع الأقسام (شامل)</option>
+                        <option value="citizens">المراجعين</option>
+                        <option value="shura">أعضاء مجلس الشورى</option>
+                        <option value="municipal">أعضاء المجلس البلدي</option>
+                        <option value="fieldvisits">الزيارات الميدانية</option>
+                        <option value="internal">الاجتماعات الداخلية</option>
+                        <option value="external">الاجتماعات الخارجية والورش</option>
+                        <option value="asyad">اجتماعات شركة أسياد</option>
+                        <option value="governors">زيارات أصحاب السعادة الولاة</option>
+                    </select>
+                </div>
+                <div class="form-group" style="flex:1"><label>من تاريخ</label><input type="date" id="rep_from" class="form-control"></div>
+                <div class="form-group" style="flex:1"><label>إلى تاريخ</label><input type="date" id="rep_to" class="form-control"></div>
+                <button class="btn btn-primary" onclick="generateReport()" style="height:40px;">استخراج التقرير</button>
+                <button class="btn btn-success" onclick="downloadPDF()" style="height:40px;"><i class="fas fa-file-pdf"></i> حفظ بصيغة PDF</button>
+            </div>
+
+            <div id="pdf-content">
+                <h3 id="dynamic_report_title" class="report-title-dynamic">تقرير لقاءات ومواعيد الفاضل المدير العام</h3>
+                
+                <table class="compact-table" id="tbl-compact-report">
+                    <thead><tr><th>م</th><th>التاريخ</th><th>نوع المعاملة</th><th>الاسم / الموضوع</th><th>الحالة</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+
+                <div class="charts-container" id="report-charts">
+                    <div class="chart-box">
+                        <h4 style="margin-bottom: 10px; color:#555;">الأنشطة</h4>
+                        <div class="chart-wrapper"><canvas id="pieChart"></canvas></div>
+                    </div>
+                    <div class="chart-box">
+                        <h4 style="margin-bottom: 10px; color:#555;">حالات الإنجاز</h4>
+                        <div class="chart-wrapper"><canvas id="statusChart"></canvas></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+if(typeof ChartDataLabels !== 'undefined'){ Chart.register(ChartDataLabels); }
+
+function formatDate(d) {
+    if(!d) return ''; const p = d.split('-'); if(p.length === 3) return `${p[2]}/${p[1]}/${p[0]}`; return d;
+}
+
+// =================== معالجة الصور ===================
+let tempImagesBase64 = []; 
+document.getElementById('fld_images').addEventListener('change', async function(e) {
+    tempImagesBase64 = []; const files = Array.from(e.target.files);
+    for(let file of files) { try { const base64 = await resizeImage(file); tempImagesBase64.push(base64); } catch (err) {} }
+    document.getElementById('fld_images_info').style.display = 'none';
+});
+
+function resizeImage(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const img = new Image(); img.src = event.target.result;
+            img.onload = function() {
+                const canvas = document.createElement('canvas'); const MAX_WIDTH = 400; let scale = 1;
+                if(img.width > MAX_WIDTH) scale = MAX_WIDTH / img.width;
+                canvas.width = img.width * scale; canvas.height = img.height * scale;
+                const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                resolve(canvas.toDataURL('image/jpeg', 0.5)); 
+            };
+            img.onerror = reject;
+        };
+        reader.onerror = reject; reader.readAsDataURL(file);
+    });
+}
+
+// =================== الدخول ===================
+function checkLogin() {
+    const u = document.getElementById('username').value.trim(); 
+    const p = document.getElementById('password').value.trim();
+    
+    // قائمة المستخدمين الصلاحيات
+    const validUsers = {
+        'so8674': ['8674', '٨٦٧٤'],
+        'so0001': ['0001', '٠٠٠١'],
+        'so0002': ['0002', '٠٠٠٢']
+    };
+
+    if(validUsers[u] && validUsers[u].includes(p)) {
+        document.getElementById('login-screen').style.display = 'none'; 
+        document.getElementById('main-app').style.display = 'block';
+    } else { 
+        document.getElementById('login-error').style.display = 'block'; 
+    }
+}
+
+// =================== الدوائر والأقسام والمنصات ===================
+const orgStructure = {
+    "مكتب المدير العام": ["قسم الشؤون القانونية", "قسم البريد والوثائق", "قسم التنسيق والمتابعة", "قسم التحول المؤسسي وإدارة الأداء", "قسم متابعة تنفيذ الاستراتيجية العمرانية"],
+    "دائرة التخطيط العمراني": ["قسم المخططات والتجديد الحضري", "قسم الخدمات التخطيطية", "قسم المعلومات الجغرافية والمساحة والخرائط"],
+    "دائرة الإسكان": ["قسم الخيارات الإسكانية والأراضي", "قسم الانتفاع بالأراضي", "قسم التطوير العقاري", "قسم إثبات وتسجيل الملك", "قسم الإسكان الاجتماعي والمشاريع"],
+    "دائرة الشؤون الإدارية والمالية": ["قسم الموارد البشرية", "قسم الخدمات الإدارية والمالية", "قسم تقنية المعلومات"],
+    "دائرة السجل العقاري": ["قسم الإجراءات والتصرفات العقارية", "قسم الوثائق العقارية"],
+    "دائرة الخدمة الموحدة": ["بدون قسم"],
+    "دائرة الإسكان والتخطيط العمراني بالسويق": ["قسم الخدمة الموحدة", "قسم الشؤون الإدارية والمالية", "قسم الإسكان", "قسم التخطيط العمراني", "قسم السجل العقاري"]
+};
+
+function loadDepartments() {
+    const opts = '<option value="">اختر الدائرة...</option>' + Object.keys(orgStructure).map(d => `<option value="${d}">${d}</option>`).join('');
+    document.getElementById('cit_dept').innerHTML = opts; document.getElementById('int_dept').innerHTML = opts;
+    document.getElementById('shu_dept').innerHTML = opts; document.getElementById('mun_dept').innerHTML = opts;
+}
+loadDepartments();
+
+function updateSections(deptId, secId) {
+    const val = document.getElementById(deptId).value;
+    document.getElementById(secId).innerHTML = (val && orgStructure[val]) ? '<option value="">اختر القسم...</option>' + orgStructure[val].map(s => `<option value="${s}">${s}</option>`).join('') : '<option value="">اختر القسم...</option>';
+}
+
+let savedPlatformTypes = JSON.parse(localStorage.getItem('savedPlatformTypes') || '["طلب أرض سكنية", "تظلم", "إثبات ملك"]');
+function updatePlatformTypesDatalist() { document.getElementById('dl_platform_types').innerHTML = savedPlatformTypes.map(c => `<option value="${c}">`).join(''); }
+updatePlatformTypesDatalist();
+function checkAndSavePlatformType(val) { if(val && !savedPlatformTypes.includes(val.trim())) { savedPlatformTypes.push(val.trim()); localStorage.setItem('savedPlatformTypes', JSON.stringify(savedPlatformTypes)); updatePlatformTypesDatalist(); } }
+
+// =================== قاعدة البيانات (تهيئة فارغة 100%) ===================
+let DB = {};
+const sections_db = ['citizens', 'shura', 'municipal', 'fieldvisits', 'internal', 'external', 'asyad', 'governors'];
+let currentEditId = null;
+
+// الكود التالي يمسح البيانات السابقة تماماً في حال تشغيل هذه النسخة لأول مرة، ويبدأ بقاعدة بيانات فارغة
+if (!localStorage.getItem('sysInit_CleanStart_v2')) {
+    sections_db.forEach(sec => {
+        DB[sec] = [];
+        localStorage.setItem(sec, JSON.stringify(DB[sec]));
+    });
+    localStorage.setItem('sysInit_CleanStart_v2', 'true');
+} else {
+    sections_db.forEach(sec => DB[sec] = JSON.parse(localStorage.getItem(sec) || '[]'));
+}
+
+document.querySelectorAll('input[type="date"]').forEach(el => el.value = new Date().toISOString().split('T')[0]);
+
+// =================== الحفظ والتعديل ===================
+function saveRecord(type) {
+    let rec = currentEditId ? DB[type].find(r => r.id === currentEditId) : { id: Date.now() };
+    const getV = id => document.getElementById(id).value;
+    
+    if(type === 'citizens') {
+        rec.name=getV('cit_name'); rec.date=getV('cit_date'); rec.dept=getV('cit_dept'); rec.sec=getV('cit_sec'); rec.state=getV('cit_state'); rec.phone=getV('cit_phone'); 
+        rec.salasa=getV('cit_salasa'); rec.platform_no=getV('cit_platform_no'); rec.platform_type=getV('cit_platform_type'); rec.subject=getV('cit_subject');
+        checkAndSavePlatformType(rec.platform_type); if(!rec.name) return alert('الاسم مطلوب');
+    } else if(type === 'shura') {
+        rec.name=getV('shu_name'); rec.date=getV('shu_date'); rec.dept=getV('shu_dept'); rec.sec=getV('shu_sec'); rec.state=getV('shu_state'); rec.phone=getV('shu_phone'); rec.comp_count=getV('shu_comp_count'); rec.status=getV('shu_status'); rec.comp_names=getV('shu_comp_names'); rec.subject=getV('shu_subject');
+    } else if(type === 'municipal') {
+        rec.name=getV('mun_name'); rec.date=getV('mun_date'); rec.dept=getV('mun_dept'); rec.sec=getV('mun_sec'); rec.state=getV('mun_state'); rec.phone=getV('mun_phone'); rec.comp_count=getV('mun_comp_count'); rec.status=getV('mun_status'); rec.comp_names=getV('mun_comp_names'); rec.subject=getV('mun_subject');
+    } else if(type === 'fieldvisits') {
+        rec.place=getV('fld_place'); rec.date=getV('fld_date'); rec.team=getV('fld_team'); rec.status=getV('fld_status'); rec.goal=getV('fld_goal'); rec.notes=getV('fld_notes'); 
+        if(tempImagesBase64.length > 0) { rec.images = [...tempImagesBase64]; tempImagesBase64 = []; document.getElementById('fld_images').value = ''; } 
+        else if (!currentEditId) { rec.images = []; }
+    } else if(type === 'internal') {
+        rec.topic=getV('int_topic'); rec.date=getV('int_date'); rec.dept=getV('int_dept'); rec.sec=getV('int_sec'); rec.decisions=getV('int_decisions');
+    } else if(type === 'external') {
+        rec.name=getV('ext_name'); rec.date=getV('ext_date'); rec.org=getV('ext_org'); rec.loc=getV('ext_loc'); rec.goals=getV('ext_goals'); rec.plan=getV('ext_plan');
+    } else if(type === 'asyad') {
+        rec.goals=getV('asy_goals'); rec.date=getV('asy_date'); rec.reps=getV('asy_reps'); rec.reqs=getV('asy_reqs'); rec.dec=getV('asy_dec');
+    } else if(type === 'governors') {
+        rec.name=getV('gov_name'); rec.date=getV('gov_date'); rec.state=getV('gov_state'); rec.prog=getV('gov_prog'); rec.demands=getV('gov_demands'); rec.dec=getV('gov_dec');
+    }
+
+    try {
+        if(!currentEditId) DB[type].push(rec);
+        localStorage.setItem(type, JSON.stringify(DB[type]));
+        cancelEdit(type); updateUI(); updateDatalists();
+        alert(currentEditId ? 'تم التعديل' : 'تم الحفظ');
+    } catch(e) { alert("الذاكرة ممتلئة!"); }
+}
+
+function editRecord(type, id) {
+    currentEditId = id; const r = DB[type].find(x => x.id === id); const setV = (id, val) => { if(document.getElementById(id)) document.getElementById(id).value = val || ''; };
+    
+    if(type==='citizens') { setV('cit_name',r.name); setV('cit_date',r.date); setV('cit_dept',r.dept); updateSections('cit_dept','cit_sec'); setV('cit_sec',r.sec); setV('cit_state',r.state); setV('cit_phone',r.phone); setV('cit_salasa',r.salasa); setV('cit_platform_no',r.platform_no); setV('cit_platform_type',r.platform_type); setV('cit_subject',r.subject); }
+    if(type==='shura') { setV('shu_name',r.name); setV('shu_date',r.date); setV('shu_dept',r.dept); updateSections('shu_dept','shu_sec'); setV('shu_sec',r.sec); setV('shu_state',r.state); setV('shu_phone',r.phone); setV('shu_comp_count',r.comp_count); setV('shu_status',r.status); setV('shu_comp_names',r.comp_names); setV('shu_subject',r.subject); }
+    if(type==='municipal') { setV('mun_name',r.name); setV('mun_date',r.date); setV('mun_dept',r.dept); updateSections('mun_dept','mun_sec'); setV('mun_sec',r.sec); setV('mun_state',r.state); setV('mun_phone',r.phone); setV('mun_comp_count',r.comp_count); setV('mun_status',r.status); setV('mun_comp_names',r.comp_names); setV('mun_subject',r.subject); }
+    if(type==='fieldvisits') { setV('fld_place',r.place); setV('fld_date',r.date); setV('fld_team',r.team); setV('fld_status',r.status); setV('fld_goal',r.goal); setV('fld_notes',r.notes); }
+    if(type==='internal') { setV('int_topic',r.topic); setV('int_date',r.date); setV('int_dept',r.dept); updateSections('int_dept','int_sec'); setV('int_sec',r.sec); setV('int_decisions',r.decisions); }
+    if(type==='external') { setV('ext_name',r.name); setV('ext_date',r.date); setV('ext_org',r.org); setV('ext_loc',r.loc); setV('ext_goals',r.goals); setV('ext_plan',r.plan); }
+    if(type==='asyad') { setV('asy_goals',r.goals); setV('asy_date',r.date); setV('asy_reps',r.reps); setV('asy_reqs',r.reqs); setV('asy_dec',r.dec); }
+    if(type==='governors') { setV('gov_name',r.name); setV('gov_date',r.date); setV('gov_state',r.state); setV('gov_prog',r.prog); setV('gov_demands',r.demands); setV('gov_dec',r.dec); }
+
+    document.getElementById(`btn-save-${type}`).innerHTML = '<i class="fas fa-edit"></i> تحديث السجل';
+    document.getElementById(`btn-cancel-${type}`).style.display = 'inline-block';
+    window.scrollTo(0, 0);
+}
+
+function cancelEdit(type) {
+    currentEditId = null;
+    document.querySelectorAll(`#sec-${type} input:not([type="date"]), #sec-${type} textarea, #sec-${type} select`).forEach(el => el.value = (el.type==='number')?'0':'');
+    if(type === 'fieldvisits') { document.getElementById('fld_images_info').style.display = 'none'; tempImagesBase64 = []; }
+    document.getElementById(`btn-save-${type}`).innerHTML = '<i class="fas fa-save"></i> حفظ السجل';
+    document.getElementById(`btn-cancel-${type}`).style.display = 'none';
+}
+
+function deleteRecord(type, id) { if(confirm('تأكيد الحذف؟')) { DB[type] = DB[type].filter(r => r.id !== id); localStorage.setItem(type, JSON.stringify(DB[type])); updateUI(); } }
+function searchTable(type, query) { const q = query.toLowerCase(); const filtered = DB[type].filter(r => JSON.stringify(r).toLowerCase().includes(q)); renderTableRows(type, filtered); }
+
+// =================== عارض الصور وطباعتها ===================
+let currentModalImages = [], currentModalPlace = '';
+function viewImages(id) {
+    const rec = DB.fieldvisits.find(r => r.id === id);
+    if(!rec || !rec.images || rec.images.length===0) return;
+    currentModalImages = rec.images; currentModalPlace = rec.place;
+    document.getElementById('modal-title').innerText = `صور: ${rec.place}`;
+    document.getElementById('modal-images').innerHTML = rec.images.map((img, i) => `<div style="text-align:center;"><img src="${img}"><p>صورة ${i+1}</p></div>`).join('');
+    document.getElementById('image-modal').style.display = 'flex';
+}
+function closeImageModal() { document.getElementById('image-modal').style.display = 'none'; }
+function printModalImages() {
+    let printWin = window.open('', '_blank');
+    let html = `<html dir="rtl"><head><style>body{text-align:center;} img{max-width:300px;margin:10px;} @page {margin: 0.5cm;}</style></head><body>`;
+    currentModalImages.forEach((img, i) => { html += `<figure><img src="${img}"><figcaption>صورة ${i+1}</figcaption></figure>`; });
+    printWin.document.write(html+'</body></html>'); printWin.document.close();
+    setTimeout(() => { printWin.print(); printWin.close(); }, 500); 
+}
+
+// =================== طباعة سجل مفرد ===================
+function printSingleRecord(sec, id) {
+    const r = DB[sec].find(x => x.id === id); if(!r) return;
+    const titles = { citizens: 'المراجعين', shura: 'مجلس الشورى', municipal: 'المجلس البلدي', fieldvisits: 'الزيارات الميدانية', internal: 'الاجتماعات الداخلية', external: 'الاجتماعات الخارجية', asyad: 'اجتماعات أسياد', governors: 'زيارات الولاة' };
+    let rows = ''; const addRow = (lbl, val) => { if(val) rows += `<tr><th>${lbl}</th><td>${val}</td></tr>`; };
+
+    addRow('التاريخ', formatDate(r.date));
+    if(sec === 'citizens') { addRow('الاسم', r.name); addRow('الدائرة', r.dept); addRow('القسم', r.sec); addRow('الولاية', r.state); addRow('الهاتف', r.phone); addRow('سلاسة', r.salasa); addRow('المنصة', r.platform_no); addRow('نوع المنصة', r.platform_type); addRow('الموضوع', r.subject); } 
+    else if(sec === 'shura' || sec === 'municipal') { addRow('الاسم', r.name); addRow('الدائرة', r.dept); addRow('القسم', r.sec); addRow('الولاية', r.state); addRow('المرافقين', r.comp_count); addRow('الحالة', r.status); addRow('الموضوع', r.subject); } 
+    else if(sec === 'fieldvisits') { addRow('المكان', r.place); addRow('الفريق', r.team); addRow('الحالة', r.status); addRow('الهدف', r.goal); addRow('الملاحظات', r.notes); } 
+    else if(sec === 'internal') { addRow('الموضوع', r.topic); addRow('الدائرة', r.dept); addRow('القسم', r.sec); addRow('القرارات', r.decisions); } 
+    else if(sec === 'external') { addRow('الاسم', r.name); addRow('المنظمة', r.org); addRow('المكان', r.loc); addRow('الأهداف', r.goals); addRow('الخطة', r.plan); } 
+    else if(sec === 'asyad') { addRow('الأهداف', r.goals); addRow('الممثلين', r.reps); addRow('المتطلبات', r.reqs); addRow('القرارات', r.dec); } 
+    else if(sec === 'governors') { addRow('الوالي', r.name); addRow('الولاية', r.state); addRow('البرنامج', r.prog); addRow('المطالبات', r.demands); addRow('التوجيهات', r.dec); }
+
+    let printWin = window.open('', '', 'width=800,height=600');
+    printWin.document.write(`<html dir="rtl"><head><title>طباعة سجل</title><style>body{font-family:'Tajawal',sans-serif;padding:20px;} h3{text-align:center;} table{width:100%;border-collapse:collapse;margin-top:20px;} th,td{border:1px solid #000;padding:10px;text-align:right;} th{background:#eee;width:30%;} @page { margin: 0.5cm; }</style></head><body><h3>تفاصيل السجل (${titles[sec]})</h3><table>${rows}</table></body></html>`);
+    printWin.document.close(); setTimeout(() => { printWin.print(); printWin.close(); }, 250);
+}
+
+// =================== تحديث الواجهة وتلوين الصفوف ===================
+function updateUI() {
+    sections_db.forEach(sec => {
+        if(document.getElementById(`c-${sec.substring(0,3)}`)) document.getElementById(`c-${sec.substring(0,3)}`).innerText = DB[sec].length;
+        if(document.getElementById(`d-${sec.substring(0,3)}`)) document.getElementById(`d-${sec.substring(0,3)}`).innerText = DB[sec].length;
+        renderTableRows(sec, DB[sec]);
+    });
+}
+
+function renderTableRows(sec, data) {
+    const tbody = document.querySelector(`#tbl-${sec} tbody`);
+    if(!tbody) return; tbody.innerHTML = '';
+    
+    [...data].reverse().forEach(r => {
+        let tr = document.createElement('tr');
+        
+        if(r.status === 'منجزة') tr.classList.add('row-done');
+        else if(r.status === 'قيد المتابعة' || r.status === 'قيد الاجراء') tr.classList.add('row-progress');
+
+        let imgBtn = '';
+        if(sec === 'fieldvisits' && r.images && r.images.length > 0) { imgBtn = `<button class="action-btn attachment" onclick="viewImages(${r.id})" title="عرض المرفقات"><i class="fas fa-paperclip"></i> ${r.images.length}</button>`; }
+
+        if(sec === 'citizens') tr.innerHTML = `<td>${formatDate(r.date)}</td><td>${r.name}</td><td>${r.platform_no||'-'} / ${r.salasa||'-'}</td><td>${r.subject.substring(0,30)}</td>`;
+        if(sec === 'shura' || sec === 'municipal') tr.innerHTML = `<td>${formatDate(r.date)}</td><td>${r.name}</td><td>${r.state}</td><td>${r.status}</td><td>${r.subject.substring(0,30)}</td>`;
+        if(sec === 'fieldvisits') tr.innerHTML = `<td>${formatDate(r.date)}</td><td>${r.place}</td><td>${(r.team||'').substring(0,20)}</td><td>${r.status||'-'}</td><td>${r.goal.substring(0,30)}</td>`;
+        if(sec === 'internal') tr.innerHTML = `<td>${formatDate(r.date)}</td><td>${r.topic}</td><td>${r.dept||'-'}</td><td>${r.decisions.substring(0,30)}</td>`;
+        if(sec === 'external') tr.innerHTML = `<td>${formatDate(r.date)}</td><td>${r.name}</td><td>${r.org||'-'}</td><td>${r.loc||'-'}</td>`;
+        if(sec === 'asyad') tr.innerHTML = `<td>${formatDate(r.date)}</td><td>${r.goals.substring(0,30)}</td><td>${(r.reqs||'').substring(0,30)}</td><td>${(r.dec||'').substring(0,30)}</td>`;
+        if(sec === 'governors') tr.innerHTML = `<td>${formatDate(r.date)}</td><td>${r.name}</td><td>${r.state}</td><td>${(r.demands||'').substring(0,30)}</td>`;
+        
+        tr.innerHTML += `<td><div class="action-btns">
+            ${imgBtn}
+            <button class="action-btn print-rec" onclick="printSingleRecord('${sec}', ${r.id})"><i class="fas fa-print"></i></button>
+            <button class="action-btn edit" onclick="editRecord('${sec}', ${r.id})"><i class="fas fa-edit"></i></button>
+            <button class="action-btn delete" onclick="deleteRecord('${sec}', ${r.id})"><i class="fas fa-trash"></i></button>
+        </div></td>`;
+        tbody.appendChild(tr);
+    });
+}
+
+function updateDatalists() {
+    const memSet = new Set(); [...DB.shura, ...DB.municipal].forEach(r => { if(r.name) memSet.add(r.name); });
+    document.getElementById('dl_members').innerHTML = Array.from(memSet).map(n => `<option value="${n}">`).join('');
+}
+function autoFillMember(name, stateId, phoneId) {
+    const rec = [...DB.shura, ...DB.municipal].reverse().find(r => r.name === name);
+    if(rec) { if(rec.state) document.getElementById(stateId).value = rec.state; if(rec.phone) document.getElementById(phoneId).value = rec.phone; }
+}
+
+function showSection(id) {
+    document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('sec-' + id).classList.add('active');
+    document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+    const menuItems = document.querySelectorAll('.menu-item');
+    menuItems.forEach(item => { if(item.getAttribute('onclick')?.includes(id)) { item.classList.add('active'); } });
+
+    if(id === 'reports') {
+        const now = new Date(); const past = new Date(); past.setDate(now.getDate() - 30);
+        document.getElementById('rep_from').value = past.toISOString().split('T')[0];
+        document.getElementById('rep_to').value = now.toISOString().split('T')[0];
+        generateReport();
+    }
+}
+
+// =================== التقارير الشاملة والطباعة ===================
+let charts = {};
+
+function generateReport() {
+    const from = document.getElementById('rep_from').value; 
+    const to = document.getElementById('rep_to').value;
+    const selectedSection = document.getElementById('rep_section').value;
+    if(!from || !to) return alert('تأكد من اختيار التاريخ');
+
+    document.getElementById('dynamic_report_title').innerText = `تقرير لقاءات ومواعيد الفاضل المدير العام من الفترة ${formatDate(from)} إلى الفترة ${formatDate(to)}`;
+
+    const fData = arr => arr.filter(d => d.date >= from && d.date <= to);
+    let combined = [];
+    
+    if (selectedSection === 'all' || selectedSection === 'citizens') fData(DB.citizens).forEach(r => combined.push({ date: r.date, type: 'مراجع', name: r.name, status: '-' }));
+    if (selectedSection === 'all' || selectedSection === 'shura') fData(DB.shura).forEach(r => combined.push({ date: r.date, type: 'شورى', name: r.name, status: r.status }));
+    if (selectedSection === 'all' || selectedSection === 'municipal') fData(DB.municipal).forEach(r => combined.push({ date: r.date, type: 'بلدي', name: r.name, status: r.status }));
+    if (selectedSection === 'all' || selectedSection === 'fieldvisits') fData(DB.fieldvisits).forEach(r => combined.push({ date: r.date, type: 'زيارة ميدانية', name: r.place, status: r.status }));
+    if (selectedSection === 'all' || selectedSection === 'internal') fData(DB.internal).forEach(r => combined.push({ date: r.date, type: 'اجتماع داخلي', name: r.topic, status: '-' }));
+    if (selectedSection === 'all' || selectedSection === 'external') fData(DB.external).forEach(r => combined.push({ date: r.date, type: 'ورشة/خارجي', name: r.name, status: '-' }));
+    if (selectedSection === 'all' || selectedSection === 'asyad') fData(DB.asyad).forEach(r => combined.push({ date: r.date, type: 'أسياد', name: r.goals.substring(0,20), status: '-' }));
+    if (selectedSection === 'all' || selectedSection === 'governors') fData(DB.governors).forEach(r => combined.push({ date: r.date, type: 'والي', name: r.name, status: '-' }));
+    
+    combined.sort((a,b) => new Date(a.date) - new Date(b.date));
+
+    const tbody = document.querySelector('#tbl-compact-report tbody'); tbody.innerHTML = '';
+    if(combined.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">لا توجد بيانات</td></tr>';
+    } else {
+        combined.forEach((r, i) => { tbody.innerHTML += `<tr><td>${i+1}</td><td>${formatDate(r.date)}</td><td>${r.type}</td><td>${r.name}</td><td>${r.status}</td></tr>`; });
+    }
+
+    document.getElementById('pdf-content').style.display = 'block';
+    if(combined.length > 0) { document.getElementById('report-charts').style.display = 'flex'; renderPieChart(combined); } 
+    else { document.getElementById('report-charts').style.display = 'none'; }
+}
+
+function renderPieChart(combinedData) {
+    if(charts.pie) charts.pie.destroy();
+    if(charts.status) charts.status.destroy();
+
+    const typeCount = combinedData.reduce((acc, curr) => { acc[curr.type] = (acc[curr.type]||0)+1; return acc; }, {});
+    const statusCount = {};
+    combinedData.forEach(r => { if(r.status && r.status !== '-') { statusCount[r.status] = (statusCount[r.status]||0)+1; } });
+
+    // الرسم 1: الأنشطة
+    charts.pie = new Chart(document.getElementById('pieChart').getContext('2d'), {
+        type: 'pie',
+        data: { labels: Object.keys(typeCount), datasets: [{ data: Object.values(typeCount), backgroundColor: ['#2e86de', '#10ac84', '#8395a7', '#ff9f43', '#ee5253', '#01a3a4', '#341f97', '#feca57'] }] },
+        options: { 
+            responsive: true, maintainAspectRatio: false, animation: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { font: { size: 13, family: 'Tajawal', weight: 'bold' } } },
+                datalabels: { color: '#fff', font: { weight: 'bold', size: 14, family: 'Tajawal' }, formatter: (value, ctx) => { let sum = 0; let dataArr = ctx.chart.data.datasets[0].data; dataArr.map(data => { sum += data; }); return sum === 0 ? '' : (value * 100 / sum).toFixed(1) + "%"; } }
+            }
+        }
+    });
+
+    // الرسم 2: حالات الإنجاز
+    if(Object.keys(statusCount).length > 0) {
+        charts.status = new Chart(document.getElementById('statusChart').getContext('2d'), {
+            type: 'doughnut',
+            data: { labels: Object.keys(statusCount), datasets: [{ data: Object.values(statusCount), backgroundColor: ['#27ae60', '#f39c12', '#e74c3c', '#3498db'] }] },
+            options: { 
+                responsive: true, maintainAspectRatio: false, animation: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { font: { size: 13, family: 'Tajawal', weight: 'bold' } } },
+                    datalabels: { color: '#fff', font: { weight: 'bold', size: 14, family: 'Tajawal' }, formatter: (value, ctx) => { let sum = 0; let dataArr = ctx.chart.data.datasets[0].data; dataArr.map(data => { sum += data; }); return sum === 0 ? '' : (value * 100 / sum).toFixed(1) + "%"; } }
+                }
+            }
+        });
+        document.getElementById('statusChart').parentElement.parentElement.style.display = 'block';
+    } else {
+        document.getElementById('statusChart').parentElement.parentElement.style.display = 'none';
+    }
+}
+
+function downloadPDF() {
+    const element = document.getElementById('pdf-content');
+    if (element.style.display === 'none' || element.style.display === '') return alert("استخرج التقرير أولاً");
+    const opt = { margin: 0.5, filename: 'تقرير_المدير_العام.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true }, jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' } };
+    html2pdf().set(opt).from(element).save();
+}
+
+setInterval(() => document.getElementById('sysTime').innerText = new Date().toLocaleString('ar-OM'), 1000);
+updateUI(); updateDatalists();
+
+// ================== أكواد الحماية (تمنع الفحص والتعديل) ==================
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.onkeydown = function(e) {
+    if (e.keyCode === 123) return false;
+    if (e.ctrlKey && e.shiftKey && e.keyCode === 'I'.charCodeAt(0)) return false;
+    if (e.ctrlKey && e.shiftKey && e.keyCode === 'J'.charCodeAt(0)) return false;
+    if (e.ctrlKey && e.keyCode === 'U'.charCodeAt(0)) return false;
+    if (e.ctrlKey && e.keyCode === 'S'.charCodeAt(0)) return false;
+}
+</script>
+<!-- ===== زر تثبيت التطبيق وتسجيل Service Worker ===== -->
+<button id="pwa-install-btn"><i class="fas fa-download"></i> تثبيت التطبيق</button>
+<script>
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(err => console.log('SW error:', err));
+    });
+}
+let deferredInstallPrompt = null;
+const installBtn = document.getElementById('pwa-install-btn');
+window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault(); deferredInstallPrompt = e; installBtn.style.display = 'inline-flex';
+});
+installBtn.addEventListener('click', async () => {
+    if (!deferredInstallPrompt) return;
+    deferredInstallPrompt.prompt(); await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null; installBtn.style.display = 'none';
+});
+window.addEventListener('appinstalled', () => { installBtn.style.display = 'none'; });
+// فتح القسم مباشرة من اختصارات التطبيق (مثل #reports)
+if (location.hash && document.getElementById('sec-' + location.hash.slice(1))) { showSection(location.hash.slice(1)); }
+</script>
+</body>
+</html>
