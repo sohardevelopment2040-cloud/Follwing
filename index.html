@@ -156,8 +156,8 @@
     <div class="login-box">
         <i class="fas fa-user-shield"></i>
         <h2>تسجيل الدخول للنظام</h2>
-        <input type="text" id="username" placeholder="اسم المستخدم">
-        <input type="password" id="password" placeholder="كلمة المرور">
+        <input type="text" id="username" placeholder="اسم المستخدم" autocapitalize="none" autocorrect="off" autocomplete="username" spellcheck="false" dir="ltr">
+        <input type="password" id="password" placeholder="كلمة المرور" inputmode="numeric" autocomplete="current-password" dir="ltr" onkeydown="if(event.key==='Enter')checkLogin()">
         <button onclick="checkLogin()">تسجيل الدخول</button>
         <p id="login-error" style="color: red; font-weight: bold; margin-top: 15px; display: none;">بيانات الدخول غير صحيحة!</p>
     </div>
@@ -514,8 +514,10 @@ function resizeImage(file) {
 
 // =================== الدخول ===================
 function checkLogin() {
-    const u = document.getElementById('username').value.trim(); 
-    const p = document.getElementById('password').value.trim();
+    // توحيد الإدخال: حروف صغيرة + تحويل الأرقام العربية والفارسية إلى إنجليزية + إزالة المسافات
+    const norm = s => s.replace(/[٠-٩]/g, d => d.charCodeAt(0) - 0x0660).replace(/[۰-۹]/g, d => d.charCodeAt(0) - 0x06F0).replace(/\s+/g, '').toLowerCase();
+    const u = norm(document.getElementById('username').value);
+    const p = norm(document.getElementById('password').value);
     
     // قائمة المستخدمين الصلاحيات
     const validUsers = {
