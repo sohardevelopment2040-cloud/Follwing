@@ -188,6 +188,7 @@
         <a class="menu-item" onclick="showSection('asyad')"><i class="fas fa-ship"></i>اجتماعات أسياد <span class="badge" id="c-asy">0</span></a>
         <a class="menu-item" onclick="showSection('governors')"><i class="fas fa-user-tie"></i>زيارات الولاة <span class="badge" id="c-gov">0</span></a>
         <a class="menu-item" onclick="showSection('reports')"><i class="fas fa-file-pdf"></i>التقارير (PDF)</a>
+        <a class="menu-item" onclick="showSection('citreport')"><i class="fas fa-list-ol"></i>تقرير المراجعين</a>
     </nav>
 </aside>
 
@@ -438,6 +439,39 @@
                         <h4 style="margin-bottom: 10px; color:#555;">حالات الإنجاز</h4>
                         <div class="chart-wrapper"><canvas id="statusChart"></canvas></div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- تقرير المراجعين (مستقل) -->
+        <div class="section-panel" id="sec-citreport">
+            <div class="report-controls">
+                <div class="form-group" style="flex:1; min-width:140px"><label>من تاريخ</label><input type="date" id="cr_from" class="form-control"></div>
+                <div class="form-group" style="flex:1; min-width:140px"><label>إلى تاريخ</label><input type="date" id="cr_to" class="form-control"></div>
+                <div class="form-group" style="flex:1; min-width:140px"><label>الولاية</label>
+                    <select id="cr_state" class="form-control"><option value="">جميع الولايات</option><option>صحار</option><option>شناص</option><option>لوى</option><option>صحم</option><option>الخابورة</option><option>السويق</option></select>
+                </div>
+                <div class="form-group" style="flex:2; min-width:200px"><label>الدائرة</label>
+                    <select id="cr_dept" class="form-control" onchange="crUpdateSections()"><option value="">جميع الدوائر</option></select>
+                </div>
+                <div class="form-group" style="flex:2; min-width:200px"><label>القسم</label>
+                    <select id="cr_sec" class="form-control"><option value="">جميع الأقسام</option></select>
+                </div>
+                <div class="form-group" style="flex:1; min-width:120px"><label>أسطر الصفحة</label>
+                    <select id="cr_rows" class="form-control"><option value="30">30 سطر</option><option value="35">35 سطر</option><option value="40" selected>40 سطر</option></select>
+                </div>
+                <button class="btn btn-primary" onclick="generateCitReport()" style="height:40px;"><i class="fas fa-search"></i> عرض التقرير</button>
+                <button class="btn btn-success" onclick="printCitReport()" style="height:40px;"><i class="fas fa-print"></i> طباعة / PDF</button>
+                <button class="btn btn-outline" onclick="exportCitReportExcel()" style="height:40px;"><i class="fas fa-file-excel" style="color:#1d6f42"></i> Excel</button>
+            </div>
+
+            <div class="form-card" style="padding:15px;">
+                <div id="cr_summary" style="font-weight:800; margin-bottom:10px; color:var(--primary);"></div>
+                <div class="table-container" style="max-height:520px;">
+                    <table class="data-table" id="tbl-cr-preview">
+                        <thead><tr><th>م</th><th>التاريخ</th><th>اسم المراجع</th><th>الولاية</th><th>الدائرة</th><th>القسم</th><th>الهاتف</th><th>الموضوع</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -708,6 +742,15 @@ function showSection(id) {
         document.getElementById('rep_to').value = now.toISOString().split('T')[0];
         generateReport();
     }
+    if(id === 'citreport') {
+        const now = new Date(); const past = new Date(); past.setDate(now.getDate() - 30);
+        if(!document.getElementById('cr_from').dataset.set) {
+            document.getElementById('cr_from').value = past.toISOString().split('T')[0];
+            document.getElementById('cr_to').value = now.toISOString().split('T')[0];
+            document.getElementById('cr_from').dataset.set = '1';
+        }
+        crLoadDepartments(); generateCitReport();
+    }
 }
 
 // =================== التقارير الشاملة والطباعة ===================
@@ -792,6 +835,132 @@ function downloadPDF() {
     if (element.style.display === 'none' || element.style.display === '') return alert("استخرج التقرير أولاً");
     const opt = { margin: 0.5, filename: 'تقرير_المدير_العام.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true }, jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' } };
     html2pdf().set(opt).from(element).save();
+}
+
+// =================== تقرير المراجعين (مستقل) ===================
+function crEsc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function crLoadDepartments() {
+    const sel = document.getElementById('cr_dept'); const cur = sel.value;
+    const depts = new Set(Object.keys(orgStructure));
+    DB.citizens.forEach(r => { if(r.dept) depts.add(r.dept); });
+    sel.innerHTML = '<option value="">جميع الدوائر</option>' + [...depts].map(d => `<option value="${crEsc(d)}">${crEsc(d)}</option>`).join('');
+    sel.value = cur; crUpdateSections();
+}
+
+function crUpdateSections() {
+    const dept = document.getElementById('cr_dept').value; const sel = document.getElementById('cr_sec'); const cur = sel.value;
+    const secs = new Set(dept && orgStructure[dept] ? orgStructure[dept] : []);
+    DB.citizens.forEach(r => { if(r.sec && (!dept || r.dept === dept)) secs.add(r.sec); });
+    if(!dept) Object.values(orgStructure).flat().forEach(s => secs.add(s));
+    sel.innerHTML = '<option value="">جميع الأقسام</option>' + [...secs].map(s => `<option value="${crEsc(s)}">${crEsc(s)}</option>`).join('');
+    if([...secs].includes(cur)) sel.value = cur;
+}
+
+function getCitReportData() {
+    const f = {
+        from: document.getElementById('cr_from').value, to: document.getElementById('cr_to').value,
+        state: document.getElementById('cr_state').value, dept: document.getElementById('cr_dept').value, sec: document.getElementById('cr_sec').value
+    };
+    const rows = DB.citizens.filter(r =>
+        (!f.from || r.date >= f.from) && (!f.to || r.date <= f.to) &&
+        (!f.state || r.state === f.state) && (!f.dept || r.dept === f.dept) && (!f.sec || r.sec === f.sec)
+    ).sort((a, b) => (a.date || '').localeCompare(b.date || '') || a.id - b.id);
+    return { f, rows };
+}
+
+function crFilterText(f) {
+    const parts = [];
+    if(f.state) parts.push('الولاية: ' + f.state);
+    if(f.dept) parts.push('الدائرة: ' + f.dept);
+    if(f.sec) parts.push('القسم: ' + f.sec);
+    return parts.length ? parts.join(' &nbsp;|&nbsp; ') : 'جميع الولايات والدوائر والأقسام';
+}
+
+function generateCitReport() {
+    const { f, rows } = getCitReportData();
+    if(f.from && f.to && f.from > f.to) return alert('تاريخ البداية بعد تاريخ النهاية');
+    const tbody = document.querySelector('#tbl-cr-preview tbody');
+    tbody.innerHTML = rows.length ? rows.map((r, i) => `<tr><td>${i+1}</td><td>${formatDate(r.date)}</td><td>${crEsc(r.name)}</td><td>${crEsc(r.state||'-')}</td><td>${crEsc(r.dept||'-')}</td><td>${crEsc(r.sec||'-')}</td><td>${crEsc(r.phone||'-')}</td><td>${crEsc((r.subject||'').substring(0,40))}</td></tr>`).join('')
+        : '<tr><td colspan="8" style="text-align:center;">لا توجد بيانات مطابقة</td></tr>';
+    document.getElementById('cr_summary').innerHTML = `عدد المراجعين: ${rows.length} &nbsp;—&nbsp; الفترة من ${formatDate(f.from)} إلى ${formatDate(f.to)} &nbsp;—&nbsp; ${crFilterText(f)}`;
+}
+
+function crCountBy(rows, key) {
+    const m = {}; rows.forEach(r => { const k = r[key] || 'غير محدد'; m[k] = (m[k]||0) + 1; });
+    return Object.entries(m).sort((a, b) => b[1] - a[1]);
+}
+
+function printCitReport() {
+    const { f, rows } = getCitReportData();
+    if(!rows.length) return alert('لا توجد بيانات مطابقة للطباعة');
+    const perPage = parseInt(document.getElementById('cr_rows').value) || 40;
+    const pages = []; for(let i = 0; i < rows.length; i += perPage) pages.push(rows.slice(i, i + perPage));
+    const rowH = (220 / perPage).toFixed(2); // ارتفاع السطر بالملم ليتسع العدد المختار في الصفحة
+    const total = pages.length;
+    const printedOn = formatDate(new Date().toISOString().split('T')[0]);
+
+    const header = `
+        <div class="hdr">
+            <div class="hdr-r">سلطنة عُمان<br>وزارة الإسكان والتخطيط العمراني<br>المديرية العامة للإسكان والتخطيط العمراني بمحافظة شمال الباطنة</div>
+            <div class="hdr-l">مكتب المدير العام<br>قسم التنسيق والمتابعة<br>تاريخ الطباعة: ${printedOn}</div>
+        </div>
+        <div class="ttl">تقرير المراجعين من ${formatDate(f.from)} إلى ${formatDate(f.to)}</div>
+        <div class="flt">${crFilterText(f)}</div>`;
+
+    const thead = `<thead><tr><th style="width:5%">م</th><th style="width:10%">التاريخ</th><th style="width:22%">اسم المراجع</th><th style="width:8%">الولاية</th><th style="width:16%">الدائرة</th><th style="width:16%">القسم</th><th style="width:9%">الهاتف</th><th style="width:14%">الموضوع</th></tr></thead>`;
+
+    let html = '';
+    pages.forEach((pg, p) => {
+        const start = p * perPage;
+        html += `<section class="page">${header}<table>${thead}<tbody>` +
+            pg.map((r, i) => `<tr><td>${start+i+1}</td><td>${formatDate(r.date)}</td><td>${crEsc(r.name)}</td><td>${crEsc(r.state||'-')}</td><td>${crEsc(r.dept||'-')}</td><td>${crEsc(r.sec||'-')}</td><td>${crEsc(r.phone||'-')}</td><td>${crEsc(r.subject||'')}</td></tr>`).join('') +
+            `</tbody></table><div class="ftr"><span>عدد المراجعين في التقرير: ${rows.length}</span><span>صفحة ${p+1} من ${total}</span></div></section>`;
+    });
+
+    const byState = crCountBy(rows, 'state'), byDept = crCountBy(rows, 'dept');
+    const sumTbl = (title, arr) => `<table class="sum"><thead><tr><th>${title}</th><th style="width:25%">العدد</th></tr></thead><tbody>${arr.map(([k, v]) => `<tr><td>${crEsc(k)}</td><td>${v}</td></tr>`).join('')}<tr class="tot"><td>الإجمالي</td><td>${rows.length}</td></tr></tbody></table>`;
+    html += `<section class="page summary">${header}<div class="ttl" style="font-size:15px;border:none">ملخص التقرير</div><div class="sums">${sumTbl('الولاية', byState)}${sumTbl('الدائرة', byDept)}</div></section>`;
+
+    const w = window.open('', '_blank');
+    if(!w) return alert('اسمح بالنوافذ المنبثقة لطباعة التقرير');
+    w.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><title>تقرير المراجعين ${formatDate(f.from)} - ${formatDate(f.to)}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        @page { size: A4 portrait; margin: 8mm; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        body { color: #000; background: #fff; }
+        .page { width: 194mm; height: 280mm; margin: 0 auto; display: flex; flex-direction: column; page-break-after: always; overflow: hidden; }
+        .page:last-child { page-break-after: auto; }
+        .hdr { display: flex; justify-content: space-between; font-size: 10.5px; font-weight: 800; line-height: 1.5; border-bottom: 2px solid #1a5276; padding-bottom: 4px; }
+        .hdr-l { text-align: left; }
+        .ttl { text-align: center; font-size: 15px; font-weight: 900; margin: 6px 0 2px; color: #1a5276; }
+        .flt { text-align: center; font-size: 11px; font-weight: 700; margin-bottom: 6px; color: #333; }
+        table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+        th, td { border: 1px solid #000; font-size: 10px; font-weight: 700; padding: 0 3px; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; height: ${rowH}mm; }
+        th { background: #dfe8ef; font-weight: 900; height: 7mm; }
+        tbody tr:nth-child(even) td { background: #f5f8fa; }
+        td:nth-child(3), td:nth-child(8) { text-align: right; }
+        .ftr { margin-top: auto; display: flex; justify-content: space-between; font-size: 10px; font-weight: 800; border-top: 1px solid #999; padding-top: 3px; }
+        .sums { display: flex; gap: 8mm; align-items: flex-start; margin-top: 4mm; }
+        .sum th, .sum td { height: 7mm; font-size: 11px; white-space: normal; }
+        .sum td:first-child { text-align: right; }
+        .sum .tot td { background: #dfe8ef; font-weight: 900; }
+        @media screen { body { background: #888; padding: 10px 0; } .page { background: #fff; padding: 8mm; width: 210mm; height: 297mm; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,.4); } }
+    </style></head><body>${html}</body></html>`);
+    w.document.close();
+    w.onload = () => setTimeout(() => w.print(), 400);
+}
+
+function exportCitReportExcel() {
+    const { f, rows } = getCitReportData();
+    if(!rows.length) return alert('لا توجد بيانات مطابقة للتصدير');
+    const cols = ['م', 'التاريخ', 'اسم المراجع', 'الولاية', 'الدائرة', 'القسم', 'الهاتف', 'رقم سلاسة', 'رقم المنصة', 'نوع المعاملة', 'الموضوع'];
+    const q = v => '"' + String(v == null ? '' : v).replace(/"/g, '""').replace(/\r?\n/g, ' ') + '"';
+    const lines = [cols.map(q).join(',')].concat(rows.map((r, i) => [i+1, formatDate(r.date), r.name, r.state, r.dept, r.sec, r.phone, r.salasa, r.platform_no, r.platform_type, r.subject].map(q).join(',')));
+    const blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = `تقرير_المراجعين_${f.from}_${f.to}.csv`; document.body.appendChild(a); a.click(); a.remove();
 }
 
 setInterval(() => document.getElementById('sysTime').innerText = new Date().toLocaleString('ar-OM'), 1000);
