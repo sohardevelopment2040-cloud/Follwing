@@ -135,6 +135,7 @@
 
         @media print {
             @page { size: A4 portrait; margin: 0.5cm; }
+            #sync-status, #sync-modal { display:none !important; }
             .sidebar, .form-card:not(#sec-reports .form-card), .report-controls, .table-toolbar, .action-btns, th:last-child, td:last-child { display: none !important; }
             .main-content { margin: 0 !important; display: block !important;}
             .top-header { box-shadow: none !important; border-bottom: 2px solid #000; margin-bottom: 10px;}
@@ -173,6 +174,39 @@
     </div>
 </div>
 
+<!-- نافذة إعدادات الربط والمزامنة -->
+<div id="sync-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:100002; justify-content:center; align-items:center; padding:15px;">
+    <div class="modal-content" style="max-width:520px; text-align:right;">
+        <span class="close-modal" onclick="closeSyncModal()" style="left:20px; right:auto;"><i class="fas fa-times"></i></span>
+        <h3 style="color:var(--primary); margin-bottom:15px;"><i class="fas fa-cloud"></i> الربط مع Google Sheets</h3>
+        <p style="font-size:13px; font-weight:700; color:#555; margin-bottom:15px; line-height:1.7;">بعد الربط تُحفظ البيانات في ملف Google Sheets وتظهر نفسها على الهاتف والكمبيوتر. تُكتب هذه الإعدادات مرة واحدة في كل جهاز.</p>
+        <div class="form-group" style="margin-bottom:12px;"><label>رابط تطبيق الويب (Web app URL)</label><input type="url" id="sync_url" class="form-control" dir="ltr" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="off" autocapitalize="none" spellcheck="false"></div>
+        <div class="form-group" style="margin-bottom:12px;"><label>المفتاح السري</label><input type="text" id="sync_key" class="form-control" dir="ltr" autocomplete="off" autocapitalize="none" spellcheck="false"></div>
+        <div id="sync_msg" style="font-weight:800; font-size:13px; margin:10px 0; min-height:20px;"></div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="saveSyncSettings()"><i class="fas fa-link"></i> حفظ واختبار الربط</button>
+            <button class="btn btn-success" onclick="uploadLocalData()"><i class="fas fa-upload"></i> رفع بيانات هذا الجهاز</button>
+            <button class="btn btn-outline" onclick="disconnectSync()" style="color:#c0392b;"><i class="fas fa-unlink"></i> إلغاء الربط</button>
+        </div>
+        <p style="font-size:12px; font-weight:700; color:#777; margin-top:12px; line-height:1.7;">• "رفع بيانات هذا الجهاز": استخدمه مرة واحدة فقط من الجهاز الذي فيه بياناتك القديمة، لنقلها إلى الملف.<br>• عند انقطاع الإنترنت يحفظ البرنامج محلياً ويرفع التغييرات تلقائياً عند عودة الاتصال.</p>
+    </div>
+</div>
+
+<!-- نافذة النسخة الاحتياطية -->
+<div id="backup-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:100002; justify-content:center; align-items:center; padding:15px;">
+    <div class="modal-content" style="max-width:480px; text-align:right;">
+        <span class="close-modal" onclick="document.getElementById('backup-modal').style.display='none'" style="left:20px; right:auto;"><i class="fas fa-times"></i></span>
+        <h3 style="color:var(--primary); margin-bottom:15px;"><i class="fas fa-database"></i> النسخة الاحتياطية</h3>
+        <div id="backup_info" style="font-size:13px; font-weight:800; color:#333; margin-bottom:12px; line-height:1.8;"></div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
+            <button class="btn btn-primary" onclick="downloadBackup()"><i class="fas fa-download"></i> تنزيل نسخة احتياطية</button>
+            <button class="btn btn-success" onclick="document.getElementById('backup_file').click()"><i class="fas fa-upload"></i> استرجاع من نسخة</button>
+            <input type="file" id="backup_file" accept=".json,application/json" style="display:none" onchange="restoreBackup(this)">
+        </div>
+        <p style="font-size:12px; font-weight:700; color:#777; line-height:1.7;">• التنزيل يحفظ ملفاً بكل بيانات البرنامج في مجلد التنزيلات (Downloads).<br>• الاسترجاع يدمج السجلات مع الموجودة ولا يحذف شيئاً، والسجل المكرر يُستبدل بنسخته من الملف.<br>• يُنصح بتنزيل نسخة أسبوعياً وحفظها في مكان آمن.</p>
+    </div>
+</div>
+
 <aside class="sidebar">
     <div class="sidebar-header">
         <h2>المديرية العامة للإسكان<br>بمحافظة شمال الباطنة</h2>
@@ -189,12 +223,14 @@
         <a class="menu-item" onclick="showSection('governors')"><i class="fas fa-user-tie"></i>زيارات الولاة <span class="badge" id="c-gov">0</span></a>
         <a class="menu-item" onclick="showSection('reports')"><i class="fas fa-file-pdf"></i>التقارير (PDF)</a>
         <a class="menu-item" onclick="showSection('citreport')"><i class="fas fa-list-ol"></i>تقرير المراجعين</a>
+        <a class="menu-item" onclick="openSyncModal()"><i class="fas fa-cloud"></i>الربط والمزامنة</a>
+        <a class="menu-item" onclick="openBackupModal()"><i class="fas fa-database"></i>النسخة الاحتياطية</a>
     </nav>
 </aside>
 
 <div class="main-content" id="main-app">
     <header class="top-header">
-        <div class="spacer"></div>
+        <div class="spacer"><span id="sync-status" onclick="syncNow(true)" title="اضغط للمزامنة الآن" style="cursor:pointer; font-size:13px; font-weight:800; padding:5px 10px; border-radius:20px; background:#eee; color:#555;"><i class="fas fa-cloud"></i> غير مرتبط</span></div>
         <div class="top-header-titles">
             <h1>مكتب المدير العام - قسم التنسيق والمتابعة</h1>
         </div>
@@ -483,8 +519,37 @@
 if(typeof ChartDataLabels !== 'undefined'){ Chart.register(ChartDataLabels); }
 
 function formatDate(d) {
-    if(!d) return ''; const p = d.split('-'); if(p.length === 3) return `${p[2]}/${p[1]}/${p[0]}`; return d;
+    if(!d) return ''; const p = String(d).split('T')[0].split('-'); if(p.length === 3) return `${p[2].padStart(2,'0')}/${p[1].padStart(2,'0')}/${p[0]}`; return d;
 }
+// تاريخ ووقت بصيغة dd/mm/yyyy hh:mm
+function formatDateTime(dt) {
+    const d = new Date(dt); if(isNaN(d)) return '';
+    const pad = n => String(n).padStart(2, '0');
+    let h = d.getHours(); const ap = h >= 12 ? 'م' : 'ص'; h = h % 12 || 12;
+    return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} - ${pad(h)}:${pad(d.getMinutes())}:${pad(d.getSeconds())} ${ap}`;
+}
+
+// =================== عرض حقول التاريخ بصيغة dd/mm/yyyy ===================
+(function() {
+    const st = document.createElement('style');
+    st.textContent = `.date-wrap{position:relative;display:block;width:100%}
+        .date-wrap input[type=date]::-webkit-datetime-edit{opacity:0}
+        .date-wrap input[type=date]{cursor:pointer;direction:ltr}
+        .date-disp{position:absolute;left:14px;top:50%;transform:translateY(-50%);pointer-events:none;font-size:14px;font-weight:800;color:#000;direction:ltr}
+        .date-disp.empty{color:#999}`;
+    document.head.appendChild(st);
+    const desc = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value');
+    document.querySelectorAll('input[type="date"]').forEach(inp => {
+        const wrap = document.createElement('span'); wrap.className = 'date-wrap';
+        inp.parentNode.insertBefore(wrap, inp); wrap.appendChild(inp);
+        const disp = document.createElement('span'); disp.className = 'date-disp'; wrap.appendChild(disp);
+        const refresh = () => { const v = desc.get.call(inp); disp.textContent = v ? formatDate(v) : 'يوم/شهر/سنة'; disp.classList.toggle('empty', !v); };
+        Object.defineProperty(inp, 'value', { get() { return desc.get.call(this); }, set(v) { desc.set.call(this, v); refresh(); }, configurable: true });
+        inp.addEventListener('input', refresh); inp.addEventListener('change', refresh);
+        inp.addEventListener('click', () => { try { inp.showPicker(); } catch(e) {} });
+        refresh();
+    });
+})();
 
 // =================== معالجة الصور ===================
 let tempImagesBase64 = []; 
@@ -529,6 +594,7 @@ function checkLogin() {
     if(validUsers[u] && validUsers[u].includes(p)) {
         document.getElementById('login-screen').style.display = 'none'; 
         document.getElementById('main-app').style.display = 'block';
+        syncNow();
     } else { 
         document.getElementById('login-error').style.display = 'block'; 
     }
@@ -582,7 +648,10 @@ document.querySelectorAll('input[type="date"]').forEach(el => el.value = new Dat
 
 // =================== الحفظ والتعديل ===================
 function saveRecord(type) {
-    let rec = currentEditId ? DB[type].find(r => r.id === currentEditId) : { id: Date.now() };
+    const wasEdit = !!currentEditId;
+    let rec = currentEditId ? DB[type].find(r => r.id === currentEditId) : null;
+    let isNew = false;
+    if(!rec) { rec = { id: currentEditId || Date.now() }; isNew = true; }
     const getV = id => document.getElementById(id).value;
     
     if(type === 'citizens') {
@@ -608,10 +677,11 @@ function saveRecord(type) {
     }
 
     try {
-        if(!currentEditId) DB[type].push(rec);
+        if(isNew) DB[type].push(rec);
         localStorage.setItem(type, JSON.stringify(DB[type]));
+        queueSyncOp({ op: 'upsert', sec: type, rec: rec });
         cancelEdit(type); updateUI(); updateDatalists();
-        alert(currentEditId ? 'تم التعديل' : 'تم الحفظ');
+        alert(wasEdit ? 'تم التعديل' : 'تم الحفظ');
     } catch(e) { alert("الذاكرة ممتلئة!"); }
 }
 
@@ -640,7 +710,7 @@ function cancelEdit(type) {
     document.getElementById(`btn-cancel-${type}`).style.display = 'none';
 }
 
-function deleteRecord(type, id) { if(confirm('تأكيد الحذف؟')) { DB[type] = DB[type].filter(r => r.id !== id); localStorage.setItem(type, JSON.stringify(DB[type])); updateUI(); } }
+function deleteRecord(type, id) { if(confirm('تأكيد الحذف؟')) { DB[type] = DB[type].filter(r => r.id !== id); localStorage.setItem(type, JSON.stringify(DB[type])); queueSyncOp({ op: 'delete', sec: type, id: id }); updateUI(); } }
 function searchTable(type, query) { const q = query.toLowerCase(); const filtered = DB[type].filter(r => JSON.stringify(r).toLowerCase().includes(q)); renderTableRows(type, filtered); }
 
 // =================== عارض الصور وطباعتها ===================
@@ -684,9 +754,11 @@ function printSingleRecord(sec, id) {
 
 // =================== تحديث الواجهة وتلوين الصفوف ===================
 function updateUI() {
+    const shortIds = { citizens: 'cit', shura: 'shu', municipal: 'mun', fieldvisits: 'fld', internal: 'int', external: 'ext', asyad: 'asy', governors: 'gov' };
     sections_db.forEach(sec => {
-        if(document.getElementById(`c-${sec.substring(0,3)}`)) document.getElementById(`c-${sec.substring(0,3)}`).innerText = DB[sec].length;
-        if(document.getElementById(`d-${sec.substring(0,3)}`)) document.getElementById(`d-${sec.substring(0,3)}`).innerText = DB[sec].length;
+        const k = shortIds[sec];
+        if(document.getElementById(`c-${k}`)) document.getElementById(`c-${k}`).innerText = DB[sec].length;
+        if(document.getElementById(`d-${k}`)) document.getElementById(`d-${k}`).innerText = DB[sec].length;
         renderTableRows(sec, DB[sec]);
     });
 }
@@ -965,7 +1037,178 @@ function exportCitReportExcel() {
     a.download = `تقرير_المراجعين_${f.from}_${f.to}.csv`; document.body.appendChild(a); a.click(); a.remove();
 }
 
-setInterval(() => document.getElementById('sysTime').innerText = new Date().toLocaleString('ar-OM'), 1000);
+// =================== المزامنة مع Google Sheets ===================
+const SYNC = {
+    url: localStorage.getItem('syncUrl') || '',
+    key: localStorage.getItem('syncKey') || '',
+    pending: JSON.parse(localStorage.getItem('syncPending') || '[]'),
+    busy: false, again: false, lastOk: localStorage.getItem('syncLastOk') || ''
+};
+function syncConfigured() { return !!(SYNC.url && SYNC.key); }
+function savePending() { localStorage.setItem('syncPending', JSON.stringify(SYNC.pending)); }
+
+function setSyncStatus(state, text) {
+    const el = document.getElementById('sync-status'); if(!el) return;
+    const styles = { off: ['#eee', '#555', 'fa-cloud'], ok: ['#d4efdf', '#1e8449', 'fa-cloud'], busy: ['#d6eaf8', '#1a5276', 'fa-sync fa-spin'], wait: ['#fdebd0', '#b9770e', 'fa-cloud-upload-alt'], err: ['#fadbd8', '#c0392b', 'fa-exclamation-triangle'] };
+    const [bg, c, ic] = styles[state] || styles.off;
+    el.style.background = bg; el.style.color = c; el.innerHTML = `<i class="fas ${ic}"></i> ${text}`;
+}
+function refreshSyncStatus() {
+    if(!syncConfigured()) return setSyncStatus('off', 'غير مرتبط');
+    if(SYNC.pending.length) return setSyncStatus('wait', `${SYNC.pending.length} بانتظار الرفع`);
+    const t = SYNC.lastOk ? formatDateTime(SYNC.lastOk).split(' - ')[1].replace(/:\d\d (?=[صم])/, ' ') : '';
+    setSyncStatus('ok', 'متزامن' + (t ? ' ' + t : ''));
+}
+
+function queueSyncOp(op) {
+    if(!syncConfigured()) return;
+    // عملية أحدث على نفس السجل تلغي الأقدم
+    const rid = op.op === 'delete' ? op.id : op.rec.id;
+    SYNC.pending = SYNC.pending.filter(p => !(p.sec === op.sec && (p.op === 'delete' ? p.id : p.rec.id) === rid));
+    SYNC.pending.push(JSON.parse(JSON.stringify(op)));
+    savePending(); syncNow();
+}
+
+async function syncRequest(body) {
+    const res = await fetch(SYNC.url, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(Object.assign({ key: SYNC.key }, body)), redirect: 'follow' });
+    const j = await res.json();
+    if(!j.ok) throw new Error(j.error || 'error');
+    return j;
+}
+
+function applyServerData(data) {
+    // بيانات الخادم + العمليات التي لم تُرفع بعد
+    sections_db.forEach(sec => { DB[sec] = Array.isArray(data[sec]) ? data[sec] : []; });
+    SYNC.pending.forEach(p => {
+        if(!DB[p.sec]) return;
+        const rid = p.op === 'delete' ? p.id : p.rec.id;
+        DB[p.sec] = DB[p.sec].filter(r => r.id !== rid);
+        if(p.op === 'upsert') DB[p.sec].push(p.rec);
+    });
+    sections_db.forEach(sec => { DB[sec].sort((a, b) => a.id - b.id); try { localStorage.setItem(sec, JSON.stringify(DB[sec])); } catch(e) {} });
+    updateUI(); updateDatalists();
+    if(document.getElementById('sec-citreport').classList.contains('active')) generateCitReport();
+}
+
+async function syncNow(manual) {
+    if(!syncConfigured()) { if(manual) openSyncModal(); return; }
+    if(SYNC.busy) { SYNC.again = true; return; }
+    SYNC.busy = true; setSyncStatus('busy', 'جارٍ المزامنة...');
+    try {
+        const ops = SYNC.pending.slice();
+        const j = await syncRequest(ops.length ? { action: 'push', ops } : { action: 'pull' });
+        // حذف العمليات المرفوعة فقط (قد تُضاف عمليات جديدة أثناء الإرسال)
+        SYNC.pending = SYNC.pending.filter(p => !ops.includes(p)); savePending();
+        SYNC.lastOk = new Date().toISOString(); localStorage.setItem('syncLastOk', SYNC.lastOk);
+        if(currentEditId === null) applyServerData(j.data);
+        refreshSyncStatus();
+    } catch(e) {
+        setSyncStatus('err', e.message === 'unauthorized' ? 'المفتاح غير صحيح' : (navigator.onLine ? 'تعذّرت المزامنة' : 'بدون إنترنت'));
+    } finally {
+        SYNC.busy = false;
+        if(SYNC.again) { SYNC.again = false; setTimeout(syncNow, 300); }
+    }
+}
+
+function openSyncModal() {
+    document.getElementById('sync_url').value = SYNC.url; document.getElementById('sync_key').value = SYNC.key;
+    document.getElementById('sync_msg').innerHTML = '';
+    document.getElementById('sync-modal').style.display = 'flex';
+}
+function closeSyncModal() { document.getElementById('sync-modal').style.display = 'none'; }
+function syncMsg(t, ok) { const m = document.getElementById('sync_msg'); m.style.color = ok ? '#1e8449' : '#c0392b'; m.innerHTML = t; }
+
+async function saveSyncSettings() {
+    const url = document.getElementById('sync_url').value.trim(), key = document.getElementById('sync_key').value.trim();
+    if(!/^https:\/\/script\.google(usercontent)?\.com\//.test(url)) return syncMsg('الرابط غير صحيح — يجب أن يبدأ بـ https://script.google.com');
+    if(!key) return syncMsg('اكتب المفتاح السري');
+    syncMsg('<i class="fas fa-sync fa-spin"></i> جارٍ الاختبار...', true);
+    const old = { url: SYNC.url, key: SYNC.key };
+    SYNC.url = url; SYNC.key = key;
+    try {
+        const j = await syncRequest({ action: 'pull' });
+        localStorage.setItem('syncUrl', url); localStorage.setItem('syncKey', key);
+        const total = Object.values(j.data).reduce((s, a) => s + a.length, 0);
+        const local = sections_db.reduce((s, k) => s + DB[k].length, 0);
+        let msg = `✔ تم الربط بنجاح — عدد السجلات في الملف: ${total}`;
+        if(total === 0 && local > 0) msg += `<br>في هذا الجهاز ${local} سجل. إذا أردت نقلها للملف اضغط "رفع بيانات هذا الجهاز".`;
+        syncMsg(msg, true);
+        if(total > 0 || local === 0) { SYNC.lastOk = new Date().toISOString(); localStorage.setItem('syncLastOk', SYNC.lastOk); applyServerData(j.data); }
+        refreshSyncStatus();
+    } catch(e) {
+        SYNC.url = old.url; SYNC.key = old.key;
+        syncMsg(e.message === 'unauthorized' ? '✘ المفتاح السري غير صحيح' : '✘ تعذّر الاتصال — تأكد من الرابط ومن نشر السكربت بصلاحية "أي شخص"');
+    }
+}
+
+async function uploadLocalData() {
+    if(!syncConfigured()) return syncMsg('احفظ إعدادات الربط أولاً');
+    const local = sections_db.reduce((s, k) => s + DB[k].length, 0);
+    if(!local) return syncMsg('لا توجد بيانات في هذا الجهاز');
+    if(!confirm(`سيتم رفع ${local} سجل من هذا الجهاز إلى الملف ودمجها مع الموجود فيه. متابعة؟`)) return;
+    sections_db.forEach(sec => DB[sec].forEach(rec => {
+        SYNC.pending = SYNC.pending.filter(p => !(p.sec === sec && (p.op === 'delete' ? p.id : p.rec.id) === rec.id));
+        SYNC.pending.push({ op: 'upsert', sec, rec: JSON.parse(JSON.stringify(rec)) });
+    }));
+    savePending(); syncMsg('<i class="fas fa-sync fa-spin"></i> جارٍ الرفع...', true);
+    await syncNow();
+    syncMsg(SYNC.pending.length ? '✘ لم يكتمل الرفع، سيُعاد المحاولة تلقائياً' : '✔ تم رفع البيانات بنجاح', !SYNC.pending.length);
+}
+
+function disconnectSync() {
+    if(!confirm('إلغاء الربط في هذا الجهاز؟ (البيانات في الملف لا تُحذف)')) return;
+    ['syncUrl', 'syncKey', 'syncPending', 'syncLastOk'].forEach(k => localStorage.removeItem(k));
+    SYNC.url = SYNC.key = SYNC.lastOk = ''; SYNC.pending = [];
+    refreshSyncStatus(); syncMsg('تم إلغاء الربط', true);
+}
+
+// =================== النسخة الاحتياطية ===================
+function openBackupModal() {
+    const total = sections_db.reduce((s, k) => s + DB[k].length, 0);
+    const last = localStorage.getItem('lastBackup');
+    document.getElementById('backup_info').innerHTML = `عدد السجلات في البرنامج: ${total}<br>آخر نسخة احتياطية: ${last ? formatDateTime(last) : 'لا توجد'}` +
+        (syncConfigured() ? '<br><span style="color:#1e8449">✔ البيانات أيضاً محفوظة في ملف Google Sheets</span>' : '');
+    document.getElementById('backup-modal').style.display = 'flex';
+}
+function downloadBackup() {
+    const data = { app: 'mawaeed', version: 1, created: new Date().toISOString(), platformTypes: savedPlatformTypes, data: {} };
+    sections_db.forEach(sec => data.data[sec] = DB[sec]);
+    const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+    a.download = `نسخة_احتياطية_المواعيد_${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(a); a.click(); a.remove();
+    localStorage.setItem('lastBackup', new Date().toISOString()); openBackupModal();
+}
+function restoreBackup(input) {
+    const file = input.files[0]; if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+        try {
+            const b = JSON.parse(reader.result); const d = b.data || b;
+            const count = sections_db.reduce((s, k) => s + (Array.isArray(d[k]) ? d[k].length : 0), 0);
+            if(!count) return alert('الملف لا يحتوي على بيانات صالحة');
+            if(!confirm(`سيتم دمج ${count} سجل من النسخة مع البيانات الحالية. متابعة؟`)) return;
+            sections_db.forEach(sec => (Array.isArray(d[sec]) ? d[sec] : []).forEach(rec => {
+                if(!rec || rec.id == null) return;
+                DB[sec] = DB[sec].filter(r => r.id !== rec.id); DB[sec].push(rec);
+                queueSyncOp({ op: 'upsert', sec, rec });
+            }));
+            sections_db.forEach(sec => { DB[sec].sort((a, b) => a.id - b.id); localStorage.setItem(sec, JSON.stringify(DB[sec])); });
+            if(Array.isArray(b.platformTypes)) b.platformTypes.forEach(checkAndSavePlatformType);
+            updateUI(); updateDatalists(); openBackupModal();
+            alert('تم الاسترجاع بنجاح');
+        } catch(e) { alert('تعذّر قراءة الملف — تأكد أنه ملف نسخة احتياطية من البرنامج'); }
+        finally { input.value = ''; }
+    };
+    reader.readAsText(file);
+}
+
+refreshSyncStatus();
+setInterval(() => { if(document.visibilityState === 'visible' && document.getElementById('main-app').style.display === 'block') syncNow(); }, 30000);
+document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible' && document.getElementById('main-app').style.display === 'block') syncNow(); });
+window.addEventListener('online', () => syncNow());
+
+setInterval(() => document.getElementById('sysTime').innerText = formatDateTime(new Date()), 1000);
 updateUI(); updateDatalists();
 
 // ================== أكواد الحماية (تمنع الفحص والتعديل) ==================
